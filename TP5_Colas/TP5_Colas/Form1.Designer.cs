@@ -38,7 +38,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ejecutarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.batallaNavalModoAutomaticoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.batallaNavalModoSemiautomáticoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ePECAtenciónDeCamionesDistrNormalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conclusiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.imgIcono)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -99,6 +100,7 @@
             this.btnSalir.TabIndex = 26;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // menuStrip1
             // 
@@ -114,7 +116,8 @@
             // 
             this.ejecutarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.batallaNavalModoAutomaticoToolStripMenuItem,
-            this.batallaNavalModoSemiautomáticoToolStripMenuItem});
+            this.ePECAtenciónDeCamionesDistrNormalToolStripMenuItem,
+            this.conclusiónToolStripMenuItem});
             this.ejecutarToolStripMenuItem.Name = "ejecutarToolStripMenuItem";
             this.ejecutarToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.ejecutarToolStripMenuItem.Text = "Ejecutar";
@@ -122,14 +125,22 @@
             // batallaNavalModoAutomaticoToolStripMenuItem
             // 
             this.batallaNavalModoAutomaticoToolStripMenuItem.Name = "batallaNavalModoAutomaticoToolStripMenuItem";
-            this.batallaNavalModoAutomaticoToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.batallaNavalModoAutomaticoToolStripMenuItem.Text = "Batalla Naval: Modo Automático";
+            this.batallaNavalModoAutomaticoToolStripMenuItem.Size = new System.Drawing.Size(315, 22);
+            this.batallaNavalModoAutomaticoToolStripMenuItem.Text = "EPEC: Atención de Camiones (Distr. Exp. Neg)";
+            this.batallaNavalModoAutomaticoToolStripMenuItem.Click += new System.EventHandler(this.batallaNavalModoAutomaticoToolStripMenuItem_Click);
             // 
-            // batallaNavalModoSemiautomáticoToolStripMenuItem
+            // ePECAtenciónDeCamionesDistrNormalToolStripMenuItem
             // 
-            this.batallaNavalModoSemiautomáticoToolStripMenuItem.Name = "batallaNavalModoSemiautomáticoToolStripMenuItem";
-            this.batallaNavalModoSemiautomáticoToolStripMenuItem.Size = new System.Drawing.Size(270, 22);
-            this.batallaNavalModoSemiautomáticoToolStripMenuItem.Text = "Batalla Naval: Modo Semiautomático";
+            this.ePECAtenciónDeCamionesDistrNormalToolStripMenuItem.Name = "ePECAtenciónDeCamionesDistrNormalToolStripMenuItem";
+            this.ePECAtenciónDeCamionesDistrNormalToolStripMenuItem.Size = new System.Drawing.Size(315, 22);
+            this.ePECAtenciónDeCamionesDistrNormalToolStripMenuItem.Text = "EPEC: Atención de Camiones (Distr. Normal)";
+            this.ePECAtenciónDeCamionesDistrNormalToolStripMenuItem.Click += new System.EventHandler(this.ePECAtenciónDeCamionesDistrNormalToolStripMenuItem_Click);
+            // 
+            // conclusiónToolStripMenuItem
+            // 
+            this.conclusiónToolStripMenuItem.Name = "conclusiónToolStripMenuItem";
+            this.conclusiónToolStripMenuItem.Size = new System.Drawing.Size(315, 22);
+            this.conclusiónToolStripMenuItem.Text = "Conclusión";
             // 
             // Form1
             // 
@@ -164,7 +175,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem ejecutarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem batallaNavalModoAutomaticoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem batallaNavalModoSemiautomáticoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ePECAtenciónDeCamionesDistrNormalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem conclusiónToolStripMenuItem;
     }
 }
 

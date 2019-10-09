@@ -16,5 +16,23 @@ namespace TP5_Colas
         {
             InitializeComponent();
         }
+
+        private void batallaNavalModoAutomaticoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SimulacionAtencionCamiones pantalla = new SimulacionAtencionCamiones();
+            pantalla.Show();
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void ePECAtenciónDeCamionesDistrNormalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SimulacionAtencionCamiones2 pantalla = new SimulacionAtencionCamiones2();
+            pantalla.Show();
+
+        }
     }
 }
