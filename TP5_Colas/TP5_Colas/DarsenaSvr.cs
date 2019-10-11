@@ -8,31 +8,42 @@ namespace TP5_Colas
 {
     class DarsenaSvr
     {
-        private TimeSpan CalcularTiempoDescarga(double valorA, double valorB)
+        private GeneradorNumerosAleatoreos generador;
+        public string estado = "libre";
+        private Camion camionSiendoAtendido;
+
+        public void setGenerador(ref GeneradorNumerosAleatoreos generador)
         {
-            //Distribucion Uniforme
-            TimeSpan tiempoDescarga = new TimeSpan();
-            Random rand = new Random();
-            float aleatorio = rand.Next(0, 1);
-
-            long tiempo = (long)valorA + (long)aleatorio * (long)(valorB - valorA);
-
-            tiempoDescarga = new TimeSpan(tiempo);
-            return tiempoDescarga;
+            this.generador = generador;
         }
 
-        private TimeSpan CalcularTiempoCalibracion(double media, double varianza)
+        public void setCamionSiendoAtendido( Camion camionSiendoAtendido)
+        {
+            this.camionSiendoAtendido = camionSiendoAtendido;
+        }
+        public  Camion getCamionSiendoAtendido()
+        {
+            return camionSiendoAtendido;
+        }
+        public TimeSpan CalcularTiempoDescarga(double valorA, double valorB)
+        {
+            //Distribucion Uniforme
+            double aleatorio = generador.GenerarAleatorio();
+
+            double tiempo = valorA + aleatorio * (valorB - valorA);
+
+            return generador.convertirSegundosHorasMinutos(tiempo);
+        }
+
+        public TimeSpan CalcularTiempoCalibracion(double media, double varianza)
         {
             //Distribucion Normal
-            TimeSpan tiempoCalibracion = new TimeSpan();
-            Random rand = new Random();
-            float aleatorio1 = rand.Next(0, 1);
-            float aleatorio2 = rand.Next(0, 1);
+            double aleatorio1 = generador.GenerarAleatorio();
+            double aleatorio2 = generador.GenerarAleatorio();
 
-            long tiempo = (long)Math.Sqrt(-2*Math.Log(aleatorio1)) * (long)(Math.Sin(2*Math.PI*aleatorio2));
+            double tiempo = Math.Sqrt(-2*Math.Log(aleatorio1)) * (Math.Sin(2*Math.PI*aleatorio2));
 
-            tiempoCalibracion = new TimeSpan(tiempo);
-            return tiempoCalibracion;
+            return generador.convertirSegundosHorasMinutos(tiempo);
         }
     }
 }

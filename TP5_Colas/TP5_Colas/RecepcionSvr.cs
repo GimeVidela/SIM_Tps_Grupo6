@@ -6,19 +6,24 @@ using System.Threading.Tasks;
 
 namespace TP5_Colas
 {
-    class RecepcionSvr
+    public class RecepcionSvr
     {
+        private GeneradorNumerosAleatoreos generador;
+        public string estado = "libre"; 
 
-        private TimeSpan CalcularTiempoAtencion( double valorA, double valorB)
+       public void setGenerador(ref GeneradorNumerosAleatoreos generador)
+        {
+            this.generador = generador;
+        }
+
+        public TimeSpan CalcularTiempoAtencion( double valorA, double valorB)
         {
             //Distribucion Uniforme
-            TimeSpan tiempoAtencion = new TimeSpan();
-            Random rand = new Random();
-            float aleatorio = rand.Next(0, 1);
-            long tiempo = (long)valorA + (long)aleatorio * (long)(valorB - valorA);
+            double aleatorio = generador.GenerarAleatorio();
 
-            tiempoAtencion = new TimeSpan(tiempo);
-            return tiempoAtencion;
+            double tiempo = valorA + aleatorio *(valorB - valorA);
+
+            return generador.convertirSegundosHorasMinutos(tiempo);
         }
     }
 }

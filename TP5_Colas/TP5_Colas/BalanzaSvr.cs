@@ -8,16 +8,21 @@ namespace TP5_Colas
 {
     class BalanzaSvr
     {
-        private TimeSpan CalcularTiempoPesaje(double valorA, double valorB)
+        private GeneradorNumerosAleatoreos generador;
+        public string estado = "libre";
+
+        public void setGenerador(ref GeneradorNumerosAleatoreos generador)
+        {
+            this.generador = generador;
+        }
+        public TimeSpan CalcularTiempoPesaje(double valorA, double valorB)
         {
             //Distribucion Uniforme
-            TimeSpan tiempoPesaje = new TimeSpan();
-            Random rand = new Random();
-            float aleatorio = rand.Next(0, 1);
-            long tiempo = (long)valorA + (long)aleatorio * (long)(valorB - valorA);
+            double aleatorio = generador.GenerarAleatorio();
 
-            tiempoPesaje = new TimeSpan(tiempo);
-            return tiempoPesaje;
+            double tiempo = valorA + aleatorio * (valorB - valorA);
+
+            return generador.convertirSegundosHorasMinutos(tiempo);
         }
     }
 }

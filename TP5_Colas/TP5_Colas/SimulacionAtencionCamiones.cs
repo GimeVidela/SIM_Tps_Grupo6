@@ -24,6 +24,8 @@ namespace TP5_Colas
 
         private void btn_simular_Click(object sender, EventArgs e)
         {
+            GestorSimulacion gestor = new GestorSimulacion();
+            gestor.SimulacionDia(1);
             //se ejecutara la simulacion de 30 dias con camiones en distro exponencial 
             //y se mostraran resultados en las grilla y en el textbox el promedio
 

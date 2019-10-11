@@ -14,7 +14,7 @@ namespace TP5_Colas
     {
         public SimulacionAtencionCamiones2()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
 
         private void btn_simular_Click(object sender, EventArgs e)
