@@ -9,12 +9,12 @@ namespace TP5_Colas
     public class GeneradorNumerosAleatoreos
     {
         double primerValor, x1, x2;
+        Random aleatorio = new Random();
         public double GenerarAleatorio()
         {
 
             while (primerValor == x2)
-            {
-                Random aleatorio = new Random();
+            {               
                 primerValor = aleatorio.Next(0, 9998);
                 x1 = primerValor;
             }
@@ -29,11 +29,32 @@ namespace TP5_Colas
         public TimeSpan convertirSegundosHorasMinutos(double minutos)
         {
             int segundos = Convert.ToInt32(minutos * 60);
-            int hor, min, seg;
+            int hor = 0;
+            int min = 0;
+            int seg = 0;
             hor = (segundos / 3600);
             min = ((segundos - hor * 3600) / 60);
             seg = segundos - (hor * 3600 + min * 60);
             return TimeSpan.Parse(hor + ":" + min + ":" + seg);
+        }
+        public TimeSpan convertirSegundosHorasMinutosPromedio(double minutos)
+        {
+            if( minutos < 0)
+            {
+                minutos = minutos;
+            }
+            int segundos = Convert.ToInt32(minutos);
+            int hor = 0;
+            int min = 0;
+            int seg = 0;
+            hor = (segundos / 3600);
+            min = ((segundos - hor * 3600) / 60);
+            seg = segundos - (hor * 3600 + min * 60);
+            return TimeSpan.Parse(hor + ":" + min + ":" + seg);
+        }
+        public Double convertirEnDouble(TimeSpan tiempo)
+        {
+            return tiempo.TotalSeconds;
         }
 
     }

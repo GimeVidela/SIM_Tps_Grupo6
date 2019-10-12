@@ -18,18 +18,28 @@ namespace TP5_Colas
             this.generador = generador;
             tipoCamnion = calcularTipoCamion();
         }
-
-
-        public Camion( TimeSpan horaLlegadaParasada)
+        public void setHoraLlegada (TimeSpan horaLlegadaCamion)
         {
-            horaLlegada = horaLlegadaParasada;
-            
+            this.horaLlegada = horaLlegadaCamion;
         }
+
+
+        //public Camion( TimeSpan horaLlegadaParasada)
+        //{
+        //    horaLlegada = horaLlegadaParasada;
+            
+        //}
 
 
         public void setHoraSalida(TimeSpan hora)
         {
             horaSalida = hora;
+        }
+        public TimeSpan TioempoAdentro()
+        {
+            TimeSpan tiempoAdentroDelComplejo;
+            tiempoAdentroDelComplejo = horaSalida - horaLlegada;
+            return tiempoAdentroDelComplejo;
         }
 
         public int getTipoCamion()

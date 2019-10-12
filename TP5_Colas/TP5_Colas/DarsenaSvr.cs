@@ -41,7 +41,7 @@ namespace TP5_Colas
             double aleatorio1 = generador.GenerarAleatorio();
             double aleatorio2 = generador.GenerarAleatorio();
 
-            double tiempo = Math.Sqrt(-2*Math.Log(aleatorio1)) * (Math.Sin(2*Math.PI*aleatorio2));
+            double tiempo = media + varianza * Math.Sqrt(-2*Math.Log(aleatorio1)) * (Math.Sin(2*Math.PI*aleatorio2));
 
             return generador.convertirSegundosHorasMinutos(tiempo);
         }
