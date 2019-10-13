@@ -266,16 +266,6 @@ namespace TP5_Colas
             return GeneradorUnico.convertirSegundosHorasMinutosPromedio(promedio);
         }
 
-        //private TimeSpan llegadaCamion(double lambda)
-        //{
-        //    //Distribucion Exponencial Negativa
-
-        //    double aleatorio = GeneradorUnico.GenerarAleatorio();
-
-        //    double tiempoLlegada = -lambda * Math.Log(1 - aleatorio);
-
-        //    return GeneradorUnico.convertirSegundosHorasMinutos(tiempoLlegada);
-        //}
 
         private TimeSpan llegadaCamionUni(double valorA, double valorB)
         {

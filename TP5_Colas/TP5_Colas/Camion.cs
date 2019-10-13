@@ -24,19 +24,13 @@ namespace TP5_Colas
         }
 
 
-        //public Camion( TimeSpan horaLlegadaParasada)
-        //{
-        //    horaLlegada = horaLlegadaParasada;
-            
-        //}
-
-
         public void setHoraSalida(TimeSpan hora)
         {
             horaSalida = hora;
         }
         public TimeSpan TioempoAdentro()
         {
+            //Metodo que calcula estadi del camion desde que es atendido hasta que descarga el combustible en darsena
             TimeSpan tiempoAdentroDelComplejo;
             tiempoAdentroDelComplejo = horaSalida - horaLlegada;
             return tiempoAdentroDelComplejo;
@@ -49,6 +43,7 @@ namespace TP5_Colas
 
         private int calcularTipoCamion()
         {
+            // metodo que determina si el camion es propio o externo
             int tipo = 0;
             Double aleatorio = generador.GenerarAleatorio();
             if (aleatorio < 0.35)
@@ -61,32 +56,5 @@ namespace TP5_Colas
             }
             return tipo;
         }
-
-    //    private TimeSpan llegadaCamionExponencial(double lambda)
-    //    {
-    //        //Distribucion Exponencial Negativa
-    //        TimeSpan llegada = new TimeSpan();
-    //        Random rand = new Random();
-    //        double aleatorio = rand.Next(0, 1);
-    //        long tiempoLlegada = 0;
-    //        tiempoLlegada = (long)-lambda * (long)Math.Log(1 - aleatorio);
-
-    //        llegada = new TimeSpan(tiempoLlegada);
-    //        return llegada;
-    //    }
-
-
-    //    private TimeSpan llegadaCamionUniforme(double valorA, double valorB)
-    //    {
-    //        //Distribucion Uniforme
-    //        TimeSpan llegada = new TimeSpan();
-    //        Random rand = new Random();
-    //        double aleatorio = rand.Next(0, 1);
-    //        long tiempoLlegada = 0;
-    //        tiempoLlegada = (long)valorA + (long)aleatorio * (long)(valorB - valorA);
-
-    //        llegada = new TimeSpan(tiempoLlegada);
-    //        return llegada;
-    //    }
     }
 }
