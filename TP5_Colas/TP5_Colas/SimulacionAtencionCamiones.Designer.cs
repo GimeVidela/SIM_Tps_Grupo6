@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimulacionAtencionCamiones));
             this.btnSalir = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -43,10 +44,9 @@
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(712, 511);
-            this.btnSalir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSalir.Location = new System.Drawing.Point(581, 415);
             this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(100, 28);
+            this.btnSalir.Size = new System.Drawing.Size(75, 23);
             this.btnSalir.TabIndex = 27;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
@@ -55,27 +55,25 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 22);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(12, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 17);
+            this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 28;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(16, 14);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Location = new System.Drawing.Point(12, 11);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(236, 190);
+            this.textBox1.Size = new System.Drawing.Size(178, 155);
             this.textBox1.TabIndex = 29;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // btn_simular
             // 
-            this.btn_simular.Location = new System.Drawing.Point(80, 231);
-            this.btn_simular.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_simular.Location = new System.Drawing.Point(60, 188);
             this.btn_simular.Name = "btn_simular";
-            this.btn_simular.Size = new System.Drawing.Size(100, 28);
+            this.btn_simular.Size = new System.Drawing.Size(75, 23);
             this.btn_simular.TabIndex = 30;
             this.btn_simular.Text = "Simular";
             this.btn_simular.UseVisualStyleBackColor = true;
@@ -84,19 +82,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 286);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(9, 232);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(229, 17);
+            this.label2.Size = new System.Drawing.Size(171, 13);
             this.label2.TabIndex = 32;
             this.label2.Text = "Promedio de Estadia de Camiones:";
             // 
             // txtPromedio
             // 
-            this.txtPromedio.Location = new System.Drawing.Point(16, 320);
-            this.txtPromedio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPromedio.Location = new System.Drawing.Point(12, 260);
             this.txtPromedio.Name = "txtPromedio";
-            this.txtPromedio.Size = new System.Drawing.Size(124, 22);
+            this.txtPromedio.Size = new System.Drawing.Size(94, 20);
             this.txtPromedio.TabIndex = 33;
             this.txtPromedio.Text = "Promedio";
             // 
@@ -107,11 +103,12 @@
             this.Column1,
             this.Column2,
             this.Column3});
-            this.grillaEstadisticas.Location = new System.Drawing.Point(280, 14);
+            this.grillaEstadisticas.Location = new System.Drawing.Point(210, 11);
+            this.grillaEstadisticas.Margin = new System.Windows.Forms.Padding(2);
             this.grillaEstadisticas.Name = "grillaEstadisticas";
             this.grillaEstadisticas.RowHeadersWidth = 51;
             this.grillaEstadisticas.RowTemplate.Height = 24;
-            this.grillaEstadisticas.Size = new System.Drawing.Size(532, 441);
+            this.grillaEstadisticas.Size = new System.Drawing.Size(446, 399);
             this.grillaEstadisticas.TabIndex = 34;
             // 
             // Column1
@@ -137,9 +134,9 @@
             // 
             // SimulacionAtencionCamiones
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(852, 554);
+            this.ClientSize = new System.Drawing.Size(668, 443);
             this.Controls.Add(this.grillaEstadisticas);
             this.Controls.Add(this.txtPromedio);
             this.Controls.Add(this.label2);
@@ -147,7 +144,6 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSalir);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SimulacionAtencionCamiones";
             this.Text = "Simulación de Atención Camiones EPEC (Distr. Exp. Negativa)";
             ((System.ComponentModel.ISupportInitialize)(this.grillaEstadisticas)).EndInit();

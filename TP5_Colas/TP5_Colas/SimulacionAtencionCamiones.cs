@@ -39,9 +39,6 @@ namespace TP5_Colas
                 grillaEstadisticas.Rows[fila].Cells[2].Value = gestor.resultados[i].Item2;
                 
             }
-
-
-
             //se ejecutara la simulacion de 30 dias con camiones en distro exponencial 
             //y se mostraran resultados en las grilla y en el textbox el promedio
 

@@ -28,11 +28,10 @@ namespace TP5_Colas
             Close();
         }
 
-        private void ePECAtenciónDeCamionesDistrNormalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void puntoDComparaciónDeSimlacionesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SimulacionAtencionCamiones2 pantalla = new SimulacionAtencionCamiones2();
-            pantalla.Show();
-
+            PuntoD pant = new PuntoD();
+            pant.Show();
         }
     }
 }

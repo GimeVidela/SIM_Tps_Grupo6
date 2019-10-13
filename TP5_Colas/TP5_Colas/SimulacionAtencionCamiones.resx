@@ -117,4 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>Se simulará el proceso de atención de camiones llegados a la Planta de EPEC. 
+Donde el camión llega es atendido, si es un camión externo se pesa y por parte final el camión pasa a darsena a descargar el combustible.
+
+A continuación se simularán 30 dias con la llegada de camiones en una Distribución Exponencial Negativa:</value>
+  </data>
 </root>
