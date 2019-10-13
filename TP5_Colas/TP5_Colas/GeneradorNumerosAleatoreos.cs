@@ -39,10 +39,7 @@ namespace TP5_Colas
         }
         public TimeSpan convertirSegundosHorasMinutosPromedio(double minutos)
         {
-            if( minutos < 0)
-            {
-                minutos = minutos;
-            }
+
             int segundos = Convert.ToInt32(minutos);
             int hor = 0;
             int min = 0;
@@ -52,6 +49,7 @@ namespace TP5_Colas
             seg = segundos - (hor * 3600 + min * 60);
             return TimeSpan.Parse(hor + ":" + min + ":" + seg);
         }
+
         public Double convertirEnDouble(TimeSpan tiempo)
         {
             return tiempo.TotalSeconds;

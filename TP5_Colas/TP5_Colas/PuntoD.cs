@@ -37,7 +37,7 @@ namespace TP5_Colas
 
             //Simulacion con distribucion uniforme
             int fila2 = 0;
-            GestorSimulacion gestor2 = new GestorSimulacion();
+            GestorSimulacionUni gestor2 = new GestorSimulacionUni();
             gestor2.Simulacion30diasUni();
             tbx_PromUni.Text = Convert.ToString(gestor2.sumTiempoPredioCamionUni);
             for (int j = 0; j < gestor2.resultados.Count; j++)
