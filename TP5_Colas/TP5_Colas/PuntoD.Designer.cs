@@ -71,7 +71,7 @@
             // 
             // btn_simular
             // 
-            this.btn_simular.Location = new System.Drawing.Point(61, 237);
+            this.btn_simular.Location = new System.Drawing.Point(61, 208);
             this.btn_simular.Name = "btn_simular";
             this.btn_simular.Size = new System.Drawing.Size(75, 23);
             this.btn_simular.TabIndex = 36;
@@ -81,7 +81,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 41);
+            this.textBox1.Location = new System.Drawing.Point(12, 12);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(178, 190);
@@ -211,7 +211,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 272);
+            this.label5.Location = new System.Drawing.Point(13, 234);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 13);
             this.label5.TabIndex = 46;
@@ -219,10 +219,10 @@
             // 
             // tbx_Conclusion
             // 
-            this.tbx_Conclusion.Location = new System.Drawing.Point(16, 295);
+            this.tbx_Conclusion.Location = new System.Drawing.Point(16, 250);
             this.tbx_Conclusion.Multiline = true;
             this.tbx_Conclusion.Name = "tbx_Conclusion";
-            this.tbx_Conclusion.Size = new System.Drawing.Size(178, 129);
+            this.tbx_Conclusion.Size = new System.Drawing.Size(178, 206);
             this.tbx_Conclusion.TabIndex = 47;
             // 
             // PuntoD
