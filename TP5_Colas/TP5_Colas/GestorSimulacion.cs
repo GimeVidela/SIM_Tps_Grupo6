@@ -17,6 +17,8 @@ namespace TP5_Colas
         DarsenaSvr darsena2 = new DarsenaSvr();
         RecepcionSvr recepcion = new RecepcionSvr();
 
+        Vector verActual = new Vector();
+
         public int cantCamionesAtendidos = 0;
         public int cantCamionesNOAtendidos = 0;
         public TimeSpan sumTiempoPredioCamion = new TimeSpan(0, 0, 0);
@@ -198,7 +200,7 @@ namespace TP5_Colas
                     //reloj iguak a proxima lllegada de camion se encola en recepcion un camion
                     reloj = proximaLlegadaCamion;
                     estadoSimulacion = "llegada camion";
-                    colaRecepcion.Enqueue(new Camion());//el constructor deberia setear el estado en cola recepcion
+                    colaRecepcion.Enqueue(new Camion());//el constructor deberia setear el estado en cola recepcion??
                     proximaLlegadaCamion = seteoDeProximos;
                     servicioRealizado = true;
                 }
@@ -576,6 +578,36 @@ namespace TP5_Colas
             }
             //devuelve el valor minimo
             return min;
+        }
+
+        private void actualizarVector()
+        {
+            verActual.reloj = reloj.ToString();
+            verActual.dia = "";//iria el dia de simulacion
+            verActual.proximaLlegada = proximaLlegadaCamion.ToString();
+            verActual.proximaRecepcion = proximaRecepcion.ToString();
+            verActual.estadoRecepcion = recepcion.estado;
+            verActual.proximaBalanza = proximaBalanza.ToString();
+            verActual.estadoBalanza = balanza.estado;
+            verActual.proximaDescargaD1 = proximaDarcena1.ToString();
+            verActual.estadoD1 = darsena1.estado;
+            verActual.proximaDescargaD2 = proximaDarcena2.ToString();
+            verActual.estadoD2 = darsena2.estado;
+
+            //usar el de arriba o el de acá abajo
+
+            //verActual.reloj = GeneradorUnico.convertirSegundosHorasMinutos(GeneradorUnico.convertirEnDouble(reloj)).ToString();
+            //verActual.proximaLlegada = GeneradorUnico.convertirSegundosHorasMinutos(GeneradorUnico.convertirEnDouble(proximaLlegadaCamion)).ToString(); 
+            //verActual.proximaRecepcion = GeneradorUnico.convertirSegundosHorasMinutos(GeneradorUnico.convertirEnDouble(proximaRecepcion)).ToString();
+            //verActual.proximaBalanza = GeneradorUnico.convertirSegundosHorasMinutos(GeneradorUnico.convertirEnDouble(proximaBalanza)).ToString(); 
+            //verActual.proximaDescargaD1 = GeneradorUnico.convertirSegundosHorasMinutos(GeneradorUnico.convertirEnDouble(proximaDarcena1)).ToString(); 
+            //verActual.proximaDescargaD2 = GeneradorUnico.convertirSegundosHorasMinutos(GeneradorUnico.convertirEnDouble(proximaDarcena2)).ToString(); 
+
+
+
+
+
+
         }
     }
 }

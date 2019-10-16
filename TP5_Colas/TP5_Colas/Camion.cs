@@ -13,6 +13,14 @@ namespace TP5_Colas
         TimeSpan horaSalida = new TimeSpan();
         private GeneradorNumerosAleatoreos generador;
         string estado;
+        public static int numCamionGlobal;
+        private int numCamionPropio;
+
+        public Camion()
+        {
+            numCamionGlobal++;
+            numCamionPropio = numCamionGlobal;
+        }
 
         public void setGenerador(ref GeneradorNumerosAleatoreos generador)
         {
@@ -68,6 +76,11 @@ namespace TP5_Colas
         public string getEstado()
         {
             return estado;
+        }
+
+        public int getNumeroPropio()
+        {
+            return numCamionPropio;
         }
     }
 }
