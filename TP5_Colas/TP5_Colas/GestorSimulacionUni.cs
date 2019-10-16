@@ -114,6 +114,7 @@ namespace TP5_Colas
                     proximaRecepcion = reloj + recepcion.CalcularTiempoAtencion(3, 7);
                     recepcion.setCamionSiendoAtendido(colaRecepcion.Dequeue());
                     recepcion.getCamionSiendoAtendido().setHoraLlegada(reloj);
+                    recepcion.getCamionSiendoAtendido().setEstado("Atendido en Recepcion");
                     recepcion.estado = "ocupado";
 
                 }
@@ -121,6 +122,7 @@ namespace TP5_Colas
                 {
                     proximaBalanza = reloj + balanza.CalcularTiempoPesaje(5, 7);
                     balanza.setCamionSiendoAtendido(colaBalanza.Dequeue());
+                    balanza.getCamionSiendoAtendido().setEstado("Siendo Pesado");
                     balanza.estado = "ocupado";
 
                 }
@@ -130,6 +132,7 @@ namespace TP5_Colas
                     darsena1.estado = "ocupado";
 
                     darsena1.setCamionSiendoAtendido(colaDarcena.Dequeue());
+                    darsena1.getCamionSiendoAtendido().setEstado("Siendo Descargado D1");
                 }
                 if (colaDarcena.Count != 0 && darsena2.estado == "libre" && contadorDescargasDarcena2 < 15)
                 {
@@ -137,6 +140,7 @@ namespace TP5_Colas
                     darsena2.estado = "ocupado";
 
                     darsena2.setCamionSiendoAtendido(colaDarcena.Dequeue());
+                    darsena2.getCamionSiendoAtendido().setEstado("Siendo Descargado D2");
                 }
                 if (estadoSimulacion == "llegada camion" && reloj >= relojInicio && reloj < relojFinDia)
                 {
@@ -173,10 +177,12 @@ namespace TP5_Colas
                     servicioRealizado = true;
                     if (recepcion.getCamionSiendoAtendido().getTipoCamion() == 1)
                     {
+                        recepcion.getCamionSiendoAtendido().setEstado("En cola Descarga");
                         colaDarcena.Enqueue(recepcion.getCamionSiendoAtendido());
                     }
                     else
                     {
+                        recepcion.getCamionSiendoAtendido().setEstado("En cola Pesaje");
                         colaBalanza.Enqueue(recepcion.getCamionSiendoAtendido());
                     }
                 }
@@ -189,6 +195,7 @@ namespace TP5_Colas
                     estadoSimulacion = "fin atencion balanza";
                     balanza.estado = "libre";
                     colaDarcena.Enqueue(balanza.getCamionSiendoAtendido());
+                    balanza.getCamionSiendoAtendido().setEstado("En cola Descarga");
                     proximaBalanza = seteoDeProximos;
                     servicioRealizado = true;
 
@@ -202,6 +209,7 @@ namespace TP5_Colas
                     cantCamionesAtendidos++;
                     darsena1.estado = "libre";
                     listaCamionesAtendidos.Add(darsena1.getCamionSiendoAtendido());
+                    darsena1.getCamionSiendoAtendido().setEstado("Fuera Sistema");
                     listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
                     proximaDarcena1 = seteoDeProximos;
                     servicioRealizado = true;
@@ -216,6 +224,7 @@ namespace TP5_Colas
                     cantCamionesAtendidos++;
                     darsena2.estado = "libre";
                     listaCamionesAtendidos.Add(darsena2.getCamionSiendoAtendido());
+                    darsena2.getCamionSiendoAtendido().setEstado("Fuera Sistema");
                     listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
                     proximaDarcena2 = seteoDeProximos;
                     servicioRealizado = true;

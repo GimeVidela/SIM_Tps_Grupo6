@@ -132,6 +132,7 @@ namespace TP5_Colas
                     proximaRecepcion = reloj + recepcion.CalcularTiempoAtencion(3, 7);
                     recepcion.setCamionSiendoAtendido(colaRecepcion.Dequeue());
                     recepcion.getCamionSiendoAtendido().setHoraLlegada(reloj);
+                    recepcion.getCamionSiendoAtendido().setEstado("Atendido en Recepcion");
                     recepcion.estado = "ocupado";
 
                 }
@@ -141,6 +142,7 @@ namespace TP5_Colas
                     //un camion de la cola de la baanza pasa  a pesarse y la balanza pasa a estar ocupada
                     proximaBalanza = reloj + balanza.CalcularTiempoPesaje(5, 7);
                     balanza.setCamionSiendoAtendido(colaBalanza.Dequeue());
+                    balanza.getCamionSiendoAtendido().setEstado("Siendo Pesado");
                     balanza.estado = "ocupado";
 
                 }
@@ -150,8 +152,8 @@ namespace TP5_Colas
                     //se pasa a darsena un camion y la darsena pasa a estar ocupada
                     proximaDarcena1 = reloj + darsena1.CalcularTiempoDescarga(15, 20);
                     darsena1.estado = "ocupado";
-
                     darsena1.setCamionSiendoAtendido(colaDarcena.Dequeue());
+                    darsena1.getCamionSiendoAtendido().setEstado("Siendo Descargado D1");
                 }
                 //si la cola de la darsen2 es distinta de cero y la darsena esta en estado libre y el contador de darsenas es menor a 15
                 if (colaDarcena.Count != 0 && darsena2.estado == "libre" && contadorDescargasDarcena2 < 15)
@@ -161,6 +163,7 @@ namespace TP5_Colas
                     darsena2.estado = "ocupado";
 
                     darsena2.setCamionSiendoAtendido(colaDarcena.Dequeue());
+                    darsena2.getCamionSiendoAtendido().setEstado("Siendo Descargado D2");
                 }
                 // si el estado se simulacion es igual a llegada camion y el reloj se encuentra entre las 12 y 18 hs
                 if (estadoSimulacion == "llegada camion" && reloj >= medioDia && reloj < relojFinDia)
@@ -195,7 +198,7 @@ namespace TP5_Colas
                     //reloj iguak a proxima lllegada de camion se encola en recepcion un camion
                     reloj = proximaLlegadaCamion;
                     estadoSimulacion = "llegada camion";
-                    colaRecepcion.Enqueue(new Camion());
+                    colaRecepcion.Enqueue(new Camion());//el constructor deberia setear el estado en cola recepcion
                     proximaLlegadaCamion = seteoDeProximos;
                     servicioRealizado = true;
                 }
@@ -211,11 +214,13 @@ namespace TP5_Colas
                     servicioRealizado = true;
                     if (recepcion.getCamionSiendoAtendido().getTipoCamion() == 1)
                     {
+                        recepcion.getCamionSiendoAtendido().setEstado("En cola Descarga");
                         colaDarcena.Enqueue(recepcion.getCamionSiendoAtendido());
                     }
                     else
                     {
                         colaBalanza.Enqueue(recepcion.getCamionSiendoAtendido());
+                        recepcion.getCamionSiendoAtendido().setEstado("En cola Pesaje");
                     }
                 }
                 //si tiempo minimo igual a proximabalanza y servicio falso
@@ -227,6 +232,7 @@ namespace TP5_Colas
                     estadoSimulacion = "fin atencion balanza";
                     balanza.estado = "libre";
                     colaDarcena.Enqueue(balanza.getCamionSiendoAtendido());
+                    balanza.getCamionSiendoAtendido().setEstado("En cola Descarga");
                     proximaBalanza = seteoDeProximos;
                     servicioRealizado = true;
 
@@ -241,6 +247,7 @@ namespace TP5_Colas
                     cantCamionesAtendidos++;
                     darsena1.estado = "libre";
                     listaCamionesAtendidos.Add( darsena1.getCamionSiendoAtendido() );
+                    darsena1.getCamionSiendoAtendido().setEstado("Fuera Sistema");
                     listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
                     proximaDarcena1 = seteoDeProximos;
                     servicioRealizado = true;
@@ -257,6 +264,7 @@ namespace TP5_Colas
                     cantCamionesAtendidos++;
                     darsena2.estado = "libre";
                     listaCamionesAtendidos.Add(darsena2.getCamionSiendoAtendido());
+                    darsena2.getCamionSiendoAtendido().setEstado("Fuera Sistema");
                     listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
                     proximaDarcena2 = seteoDeProximos;
                     servicioRealizado = true;
@@ -276,7 +284,7 @@ namespace TP5_Colas
                 if (tiempoMinimo == proximacalibracionDarcena2 && servicioRealizado == false)
                 {
                     reloj = proximacalibracionDarcena2;
-                    estadoSimulacion = "fin calibracion darcena2";
+                    estadoSimulacion = "fin calibración darcena2";
                     proximacalibracionDarcena2 = seteoDeProximos;
                     darsena2.estado = "libre";
                     servicioRealizado = true;
