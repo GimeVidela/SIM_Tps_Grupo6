@@ -57,7 +57,7 @@ namespace TP5_Colas
             }
             else
             {
-                tbx_Conclusion.Text = "El promedio de estadia de camiones dentro del proceso, desde que es atendido po el recepcionista hasta que termina la descarga del combustible, es menor cuando la llegada de camiones se produce apartir de las 12:00 hs. en Distribución Exponencial Negativa de 7,5 minutos. Con Distribución Uniforme la llegada de camiones a partir de las 05:00hs. se llegarían a atender el Doble de camiones por día, quedando pocos camiones durmiento en la entrada de la planta.";
+                tbx_Conclusion.Text = "El promedio de estadia de camiones dentro del proceso, desde que es atendido po el recepcionista hasta uqe termina la descarga del combustible, es menor cuando la llegada de camiones se produce apartir de las 12:00 hs. en Distribución Exponencial Negativa de 7,5 minutos.";
             }
 
         }

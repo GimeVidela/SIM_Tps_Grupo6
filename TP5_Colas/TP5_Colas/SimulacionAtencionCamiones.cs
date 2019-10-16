@@ -24,23 +24,27 @@ namespace TP5_Colas
 
         private void btn_simular_Click(object sender, EventArgs e)
         {
-            //se limpia la grilla
-            grillaEstadisticas.Rows.Clear();
+            
+            TimeSpan TiempoASimular = TimeSpan.Parse(hor1.Text + ":" + min1.Text + ":" + seg1.Text);
+            TimeSpan TiempoIniciociclos = TimeSpan.Parse(hor2.Text + ":" + min2.Text + ":" + seg2.Text);
+            GestorSimulacionVectorEstado gestor = new GestorSimulacionVectorEstado(Convert.ToInt32(iteraciones.Text), TiempoASimular, TiempoIniciociclos);
 
-            int fila = 0; 
-            GestorSimulacion gestor = new GestorSimulacion();
-            //se simulan 30 dias del proceso en la planta
-            gestor.Simulacion30dias();
-            //Se muestra el promedio de estadia en general de los camones y la cantidad de camiones atendido y no atendidos de cada dia
-            txtPromedio.Text = Convert.ToString( gestor.sumTiempoPredioCamion );
-            for (int i = 0; i < gestor.resultados.Count; i++)
-            {
-                fila = grillaEstadisticas.Rows.Add();
-                grillaEstadisticas.Rows[fila].Cells[0].Value = i+1;
-                grillaEstadisticas.Rows[fila].Cells[1].Value = gestor.resultados[i].Item1;
-                grillaEstadisticas.Rows[fila].Cells[2].Value = gestor.resultados[i].Item2;
-                
-            }
+            grillaEstadisticas.DataSource = gestor.SimularVectorEstado();
+
+            //int fila = 0; 
+            //GestorSimulacion gestor = new GestorSimulacion();
+            //gestor.Simulacion30dias();
+            //txtPromedio.Text = Convert.ToString( gestor.sumTiempoPredioCamion );
+            //for (int i = 0; i < gestor.resultados.Count; i++)
+            //{
+            //    fila = grillaEstadisticas.Rows.Add();
+            //    grillaEstadisticas.Rows[fila].Cells[0].Value = i+1;
+            //    grillaEstadisticas.Rows[fila].Cells[1].Value = gestor.resultados[i].Item1;
+            //    grillaEstadisticas.Rows[fila].Cells[2].Value = gestor.resultados[i].Item2;
+
+            //}
+            //se ejecutara la simulacion de 30 dias con camiones en distro exponencial 
+            //y se mostraran resultados en las grilla y en el textbox el promedio
 
         }
     }
