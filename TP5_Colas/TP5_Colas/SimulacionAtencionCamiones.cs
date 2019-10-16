@@ -24,12 +24,50 @@ namespace TP5_Colas
 
         private void btn_simular_Click(object sender, EventArgs e)
         {
-            
-            TimeSpan TiempoASimular = TimeSpan.Parse(hor1.Text + ":" + min1.Text + ":" + seg1.Text);
-            TimeSpan TiempoIniciociclos = TimeSpan.Parse(hor2.Text + ":" + min2.Text + ":" + seg2.Text);
-            GestorSimulacionVectorEstado gestor = new GestorSimulacionVectorEstado(Convert.ToInt32(iteraciones.Text), TiempoASimular, TiempoIniciociclos);
 
-            grillaEstadisticas.DataSource = gestor.SimularVectorEstado();
+            //Validacion de texboxs
+            int hora1 = Int32.Parse(hor1.Text);
+            int hora2 = Int32.Parse(hor2.Text);
+            int minu1 = Int32.Parse(min1.Text);
+            int minu2 = Int32.Parse(min2.Text);
+            int segu1 = Int32.Parse(seg1.Text);
+            int segu2 = Int32.Parse(seg2.Text);
+            long iter = long.Parse(iteraciones.Text);
+     
+
+
+            if ((hora1 >= 0 && hora1 <= 24) && (hora2 >= 0 && hora2 <= 24) && (minu1 >= 0 && minu1 <= 60) && (minu2 >= 0 && minu2 <= 60) && (segu1 >= 0 && segu1 <= 60) && (segu2 >= 0 && segu2 <= 60))
+            {
+                if (iter >= 5 && iter <= 500000)
+                {
+                    TimeSpan TiempoASimular = TimeSpan.Parse(hor1.Text + ":" + min1.Text + ":" + seg1.Text);
+                    TimeSpan TiempoIniciociclos = TimeSpan.Parse(hor2.Text + ":" + min2.Text + ":" + seg2.Text);
+
+                    if (TiempoASimular <= TiempoIniciociclos)
+                    {
+                        MessageBox.Show(" La hora ingresada que indicara la cantidad de iteraciones a mostrar debe estar dentro del rango del tiempo a simular ingresado.");
+
+                    }
+                    else
+                    {
+                        GestorSimulacionVectorEstado gestor = new GestorSimulacionVectorEstado(Convert.ToInt32(iteraciones.Text), TiempoASimular, TiempoIniciociclos);
+                        grillaEstadisticas.DataSource = gestor.SimularVectorEstado();
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La cantidad ingresada de iteraciones no es correcta. Ingrese un valor entre 5 y 500000.");
+                }
+                 
+            }
+            else
+            {
+                MessageBox.Show("Ingrese parametros de horas, minutos y segundos válidos. Para hora entre 0 y 24, para minutos y segundos entre 0 y 60.");
+            }
+
+           
+           
 
             //int fila = 0; 
             //GestorSimulacion gestor = new GestorSimulacion();

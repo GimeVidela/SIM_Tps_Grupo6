@@ -57,6 +57,7 @@
     <Compile Include="GeneradorNumerosAleatoreos.cs" />
     <Compile Include="GestorSimulacion.cs" />
     <Compile Include="GestorSimulacionUni.cs" />
+    <Compile Include="GestorSimulacionVectorEstado.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecepcionSvr.cs" />
