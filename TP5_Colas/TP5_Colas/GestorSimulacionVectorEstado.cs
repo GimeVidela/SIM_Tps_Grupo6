@@ -9,6 +9,7 @@ namespace TP5_Colas
 {
     class GestorSimulacionVectorEstado
     {
+        DataTable tablaCamiones = new DataTable();
         GeneradorNumerosAleatoreos GeneradorUnico = new GeneradorNumerosAleatoreos();
         //Camion camion = new Camion();
         BalanzaSvr balanza = new BalanzaSvr();
@@ -73,7 +74,7 @@ namespace TP5_Colas
         string estadoSimulacion = "llegada camion";
 
         //lista camiones atendidos
-        List<Camion> listaCamionesAtendidos = new List<Camion>();
+        public List<Camion> listaCamionesAtendidos = new List<Camion>();
         public List<Tuple<int, int>> resultados = new List<Tuple<int, int>>();
 
         // inicializar servidores
@@ -187,6 +188,7 @@ namespace TP5_Colas
                     proximaRecepcion = reloj + recepcion.CalcularTiempoAtencion(3, 7);
                     recepcion.setCamionSiendoAtendido(colaRecepcion.Dequeue());
                     recepcion.getCamionSiendoAtendido().setHoraLlegada(reloj);
+                    recepcion.getCamionSiendoAtendido().agregarEstado("en recepcion", reloj);
                     recepcion.estado = "ocupado";
 
                 }
@@ -194,6 +196,7 @@ namespace TP5_Colas
                 {
                     proximaBalanza = reloj + balanza.CalcularTiempoPesaje(5, 7);
                     balanza.setCamionSiendoAtendido(colaBalanza.Dequeue());
+                    balanza.getCamionSiendoAtendido().agregarEstado("en balanza", reloj);
                     balanza.estado = "ocupado";
 
                 }
@@ -201,8 +204,10 @@ namespace TP5_Colas
                 {
                     proximaDarcena1 = reloj + darsena1.CalcularTiempoDescarga(15, 20);
                     darsena1.estado = "ocupado";
+                    
 
                     darsena1.setCamionSiendoAtendido(colaDarcena.Dequeue());
+                    darsena1.getCamionSiendoAtendido().agregarEstado("en darcena1", reloj);
                 }
                 if (colaDarcena.Count != 0 && darsena2.estado == "libre" && contadorDescargasDarcena2 < 15)
                 {
@@ -210,6 +215,7 @@ namespace TP5_Colas
                     darsena2.estado = "ocupado";
 
                     darsena2.setCamionSiendoAtendido(colaDarcena.Dequeue());
+                    darsena2.getCamionSiendoAtendido().agregarEstado("en darcena2", reloj);
                 }
                 if (estadoSimulacion == "llegada camion" && reloj >= medioDia && reloj < relojFinDia)
                 {
@@ -288,6 +294,7 @@ namespace TP5_Colas
                     ultimoCamion = colaRecepcion.Peek();
                     proximaLlegadaCamion = seteoDeProximos;
                     servicioRealizado = true;
+                    colaRecepcion.Peek().agregarEstado("en cola recepcion", reloj);
                 }
                 if (tiempoMinimo == proximaRecepcion && servicioRealizado == false)
                 {
@@ -296,6 +303,7 @@ namespace TP5_Colas
                     estadoSimulacion = "fin atencion recepcion";
                     recepcion.estado = "libre";
                     proximaRecepcion = seteoDeProximos;
+                    recepcion.getCamionSiendoAtendido().agregarEstado("fin atencion recepcion", reloj);
                     //recepcion.getCamionSiendoAtendido().setGenerador(ref GeneradorUnico);
                      
                     servicioRealizado = true;
@@ -303,11 +311,13 @@ namespace TP5_Colas
                     {
                         colaDarcena.Enqueue(recepcion.getCamionSiendoAtendido());
                         ultimoCamion = colaDarcena.Peek();
+                        colaDarcena.Peek().agregarEstado("en cola darcena", reloj);
                     }
                     else
                     {
                         colaBalanza.Enqueue(recepcion.getCamionSiendoAtendido());
                         ultimoCamion = colaBalanza.Peek();
+                        colaBalanza.Peek().agregarEstado("en cola balanza", reloj);
                     }
                     recepcion.setCamionSiendoAtendido(ningunCamion);
                 }
@@ -319,11 +329,15 @@ namespace TP5_Colas
 
                     estadoSimulacion = "fin atencion balanza";
                     balanza.estado = "libre";
+
+                    balanza.getCamionSiendoAtendido().agregarEstado("fin atencion balanza", reloj);
+                   
                     colaDarcena.Enqueue(balanza.getCamionSiendoAtendido());
                     ultimoCamion = colaDarcena.Peek();
                     proximaBalanza = seteoDeProximos;
                     servicioRealizado = true;
                     balanza.setCamionSiendoAtendido(ningunCamion);
+                    colaDarcena.Peek().agregarEstado("en cola darcena", reloj);
 
                 }
 
@@ -334,13 +348,18 @@ namespace TP5_Colas
                     estadoSimulacion = "fin atencion darcena1";
                     cantCamionesAtendidos++;
                     darsena1.estado = "libre";
+
+                   // darsena1.getCamionSiendoAtendido().agregarEstado("fin atencion darcena 1", reloj);
+
                     listaCamionesAtendidos.Add(darsena1.getCamionSiendoAtendido());
                     listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
+                    listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].agregarEstado("fin atencion darcena 1", reloj);
                     ultimoCamion = darsena1.getCamionSiendoAtendido();
                     proximaDarcena1 = seteoDeProximos;
                     servicioRealizado = true;
                     contadorDescargasDarcena1++;
                     darsena1.setCamionSiendoAtendido(ningunCamion);
+
 
                 }
                 if (tiempoMinimo == proximaDarcena2 && servicioRealizado == false)
@@ -350,8 +369,12 @@ namespace TP5_Colas
                     estadoSimulacion = "fin atencion darcena2";
                     cantCamionesAtendidos++;
                     darsena2.estado = "libre";
+
+                    //darsena2.getCamionSiendoAtendido().agregarEstado("fin atencion darcena 2", reloj);
+
                     listaCamionesAtendidos.Add(darsena2.getCamionSiendoAtendido());
                     listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
+                    listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].agregarEstado("fin atencion darcena 2", reloj);
                     ultimoCamion = darsena2.getCamionSiendoAtendido();
                     proximaDarcena2 = seteoDeProximos;
                     servicioRealizado = true;
@@ -448,6 +471,24 @@ namespace TP5_Colas
                 }
                 return cadena;
             }
+        }
+
+        public DataTable cargarTablaCamiones (List<Camion> listaCamionesFinalizados )
+        {
+            tablaCamiones.Columns.Add("estado camion");
+            tablaCamiones.Columns.Add("reloj");
+            foreach(Camion i in listaCamionesFinalizados)
+            {
+                tablaCamiones.Rows.Add("estado camion " + i.numeroCamion, "reloj");
+                    for( int j=0; j<i.conocerEstados().Item1.Count ; j++)
+                {
+                    tablaCamiones.Rows.Add(i.conocerEstados().Item1[j], i.conocerEstados().Item2[j]);
+
+
+                }
+                tablaCamiones.Rows.Add("", "");
+            }
+            return tablaCamiones;
         }
 
         private TimeSpan minimo(TimeSpan a, TimeSpan b, TimeSpan c, TimeSpan d, TimeSpan e, TimeSpan f, TimeSpan g)

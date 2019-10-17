@@ -15,6 +15,28 @@ namespace TP5_Colas
         public string estadoActual = "";
         //public TimeSpan horaDelEstado;
         public int numeroCamion;
+        private List<string> estados = new List<string>();
+        private List<string> tiempos = new List<string>();
+
+        public Tuple<List<string>, List<string>> conocerEstados()
+        {
+            return Tuple.Create(this.estados, this.tiempos);
+        }
+
+        public void agregarEstado(string estado, TimeSpan reloj)
+        {
+            if(estado == "cola darcena" && estados[estados.Count - 1] == "fin atencion recepcion")
+            {
+                this.estados.Add("");
+                this.tiempos.Add("");
+
+                this.estados.Add("");
+                this.tiempos.Add("");
+
+            }
+            this.estados.Add(estado);
+            this.tiempos.Add(Convert.ToString(reloj));
+        }
 
         public void setGenerador(ref GeneradorNumerosAleatoreos generador)
         {

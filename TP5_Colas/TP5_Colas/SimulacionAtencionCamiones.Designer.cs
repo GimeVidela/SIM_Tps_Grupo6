@@ -56,7 +56,7 @@
             // btnSalir
             // 
             this.btnSalir.Location = new System.Drawing.Point(1065, 511);
-            this.btnSalir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(100, 28);
             this.btnSalir.TabIndex = 27;
@@ -76,7 +76,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(16, 14);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(260, 190);
@@ -86,7 +86,7 @@
             // btn_simular
             // 
             this.btn_simular.Location = new System.Drawing.Point(66, 401);
-            this.btn_simular.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_simular.Margin = new System.Windows.Forms.Padding(4);
             this.btn_simular.Name = "btn_simular";
             this.btn_simular.Size = new System.Drawing.Size(100, 28);
             this.btn_simular.TabIndex = 8;
@@ -107,7 +107,7 @@
             // txtPromedio
             // 
             this.txtPromedio.Location = new System.Drawing.Point(19, 483);
-            this.txtPromedio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPromedio.Margin = new System.Windows.Forms.Padding(4);
             this.txtPromedio.Name = "txtPromedio";
             this.txtPromedio.Size = new System.Drawing.Size(124, 22);
             this.txtPromedio.TabIndex = 33;
@@ -262,8 +262,9 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSalir);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SimulacionAtencionCamiones";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulación de Atención Camiones EPEC (Distr. Exp. Negativa)";
             ((System.ComponentModel.ISupportInitialize)(this.grillaEstadisticas)).EndInit();
             this.ResumeLayout(false);

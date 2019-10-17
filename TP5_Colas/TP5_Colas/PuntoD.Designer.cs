@@ -54,26 +54,29 @@
             // 
             // tbx_PromExpo
             // 
-            this.tbx_PromExpo.Location = new System.Drawing.Point(390, 436);
+            this.tbx_PromExpo.Location = new System.Drawing.Point(520, 537);
+            this.tbx_PromExpo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbx_PromExpo.Name = "tbx_PromExpo";
-            this.tbx_PromExpo.Size = new System.Drawing.Size(94, 20);
+            this.tbx_PromExpo.Size = new System.Drawing.Size(124, 22);
             this.tbx_PromExpo.TabIndex = 39;
             this.tbx_PromExpo.Text = "Promedio";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(213, 439);
+            this.label2.Location = new System.Drawing.Point(284, 540);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(171, 13);
+            this.label2.Size = new System.Drawing.Size(229, 17);
             this.label2.TabIndex = 38;
             this.label2.Text = "Promedio de Estadia de Camiones:";
             // 
             // btn_simular
             // 
-            this.btn_simular.Location = new System.Drawing.Point(61, 208);
+            this.btn_simular.Location = new System.Drawing.Point(81, 256);
+            this.btn_simular.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_simular.Name = "btn_simular";
-            this.btn_simular.Size = new System.Drawing.Size(75, 23);
+            this.btn_simular.Size = new System.Drawing.Size(100, 28);
             this.btn_simular.TabIndex = 36;
             this.btn_simular.Text = "Simular";
             this.btn_simular.UseVisualStyleBackColor = true;
@@ -81,18 +84,20 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
+            this.textBox1.Location = new System.Drawing.Point(16, 15);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(178, 190);
+            this.textBox1.Size = new System.Drawing.Size(236, 233);
             this.textBox1.TabIndex = 35;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(1059, 433);
+            this.btnSalir.Location = new System.Drawing.Point(1412, 533);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(75, 23);
+            this.btnSalir.Size = new System.Drawing.Size(100, 28);
             this.btnSalir.TabIndex = 34;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
@@ -105,12 +110,12 @@
             this.Column1,
             this.Column2,
             this.Column3});
-            this.grillaDistrExpo.Location = new System.Drawing.Point(216, 41);
-            this.grillaDistrExpo.Margin = new System.Windows.Forms.Padding(2);
+            this.grillaDistrExpo.Location = new System.Drawing.Point(288, 50);
+            this.grillaDistrExpo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grillaDistrExpo.Name = "grillaDistrExpo";
             this.grillaDistrExpo.RowHeadersWidth = 51;
             this.grillaDistrExpo.RowTemplate.Height = 24;
-            this.grillaDistrExpo.Size = new System.Drawing.Size(451, 383);
+            this.grillaDistrExpo.Size = new System.Drawing.Size(601, 471);
             this.grillaDistrExpo.TabIndex = 40;
             // 
             // Column1
@@ -141,12 +146,12 @@
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.grillaDistrUni.Location = new System.Drawing.Point(681, 41);
-            this.grillaDistrUni.Margin = new System.Windows.Forms.Padding(2);
+            this.grillaDistrUni.Location = new System.Drawing.Point(908, 50);
+            this.grillaDistrUni.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grillaDistrUni.Name = "grillaDistrUni";
             this.grillaDistrUni.RowHeadersWidth = 51;
             this.grillaDistrUni.RowTemplate.Height = 24;
-            this.grillaDistrUni.Size = new System.Drawing.Size(453, 383);
+            this.grillaDistrUni.Size = new System.Drawing.Size(604, 471);
             this.grillaDistrUni.TabIndex = 41;
             // 
             // dataGridViewTextBoxColumn1
@@ -173,17 +178,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(678, 439);
+            this.label1.Location = new System.Drawing.Point(904, 540);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(171, 13);
+            this.label1.Size = new System.Drawing.Size(229, 17);
             this.label1.TabIndex = 42;
             this.label1.Text = "Promedio de Estadia de Camiones:";
             // 
             // tbx_PromUni
             // 
-            this.tbx_PromUni.Location = new System.Drawing.Point(855, 436);
+            this.tbx_PromUni.Location = new System.Drawing.Point(1140, 537);
+            this.tbx_PromUni.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbx_PromUni.Name = "tbx_PromUni";
-            this.tbx_PromUni.Size = new System.Drawing.Size(94, 20);
+            this.tbx_PromUni.Size = new System.Drawing.Size(124, 22);
             this.tbx_PromUni.TabIndex = 43;
             this.tbx_PromUni.Text = "Promedio";
             // 
@@ -191,9 +198,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(213, 14);
+            this.label3.Location = new System.Drawing.Point(284, 17);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(427, 16);
+            this.label3.Size = new System.Drawing.Size(516, 20);
             this.label3.TabIndex = 44;
             this.label3.Text = "Llegada de Camiones en Distribución Exponencial Negativa:";
             // 
@@ -201,9 +209,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(678, 14);
+            this.label4.Location = new System.Drawing.Point(904, 17);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(337, 16);
+            this.label4.Size = new System.Drawing.Size(412, 20);
             this.label4.TabIndex = 45;
             this.label4.Text = "Llegada de Camiones en Distribución Uniforme:";
             // 
@@ -211,25 +220,27 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 234);
+            this.label5.Location = new System.Drawing.Point(17, 288);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 13);
+            this.label5.Size = new System.Drawing.Size(92, 17);
             this.label5.TabIndex = 46;
             this.label5.Text = "Conclusión:";
             // 
             // tbx_Conclusion
             // 
-            this.tbx_Conclusion.Location = new System.Drawing.Point(16, 250);
+            this.tbx_Conclusion.Location = new System.Drawing.Point(21, 308);
+            this.tbx_Conclusion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tbx_Conclusion.Multiline = true;
             this.tbx_Conclusion.Name = "tbx_Conclusion";
-            this.tbx_Conclusion.Size = new System.Drawing.Size(178, 206);
+            this.tbx_Conclusion.Size = new System.Drawing.Size(236, 253);
             this.tbx_Conclusion.TabIndex = 47;
             // 
             // PuntoD
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1155, 461);
+            this.ClientSize = new System.Drawing.Size(1540, 567);
             this.Controls.Add(this.tbx_Conclusion);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -243,7 +254,9 @@
             this.Controls.Add(this.btn_simular);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnSalir);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "PuntoD";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulación de Atención Camiones EPEC (Distr. Normal)";
             ((System.ComponentModel.ISupportInitialize)(this.grillaDistrExpo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grillaDistrUni)).EndInit();

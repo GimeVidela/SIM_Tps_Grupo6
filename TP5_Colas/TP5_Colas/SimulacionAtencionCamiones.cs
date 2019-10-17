@@ -52,6 +52,9 @@ namespace TP5_Colas
                     {
                         GestorSimulacionVectorEstado gestor = new GestorSimulacionVectorEstado(Convert.ToInt32(iteraciones.Text), TiempoASimular, TiempoIniciociclos);
                         grillaEstadisticas.DataSource = gestor.SimularVectorEstado();
+                        ListaCamionesGrilla grillaCamiones = new ListaCamionesGrilla();
+                        grillaCamiones.cargarGrilla( gestor.cargarTablaCamiones(gestor.listaCamionesAtendidos));
+                        grillaCamiones.Show();
 
                     }
                 }
