@@ -17,55 +17,63 @@ namespace TP5_Colas
             InitializeComponent();
         }
 
-        private void btn_simular_Click(object sender, EventArgs e)
-        {
-            grillaDistrExpo.Rows.Clear();
-            grillaDistrUni.Rows.Clear();
-
-            //Simulacion con distribucion exponencial
-            int fila = 0;
-            GestorSimulacion gestor = new GestorSimulacion();
-            gestor.Simulacion30dias();
-            tbx_PromExpo.Text = Convert.ToString(gestor.sumTiempoPredioCamion);
-            for (int i = 0; i < gestor.resultados.Count; i++)
-            {
-                fila = grillaDistrExpo.Rows.Add();
-                grillaDistrExpo.Rows[fila].Cells[0].Value = i + 1;
-                grillaDistrExpo.Rows[fila].Cells[1].Value = gestor.resultados[i].Item1;
-                grillaDistrExpo.Rows[fila].Cells[2].Value = gestor.resultados[i].Item2;
-            }
-
-            //Simulacion con distribucion uniforme
-            int fila2 = 0;
-            GestorSimulacionUni gestor2 = new GestorSimulacionUni();
-            gestor2.Simulacion30diasUni();
-            tbx_PromUni.Text = Convert.ToString(gestor2.sumTiempoPredioCamionUni);
-            for (int j = 0; j < gestor2.resultados.Count; j++)
-            {
-                fila2 = grillaDistrUni.Rows.Add();
-                grillaDistrUni.Rows[fila2].Cells[0].Value = j + 1;
-                grillaDistrUni.Rows[fila2].Cells[1].Value = gestor2.resultados[j].Item1;
-                grillaDistrUni.Rows[fila2].Cells[2].Value = gestor2.resultados[j].Item2;
-            }
-
-            //Completar conclusion
-            TimeSpan promUni = gestor2.sumTiempoPredioCamionUni;
-            TimeSpan promExpo = gestor.sumTiempoPredioCamion;
-            if (promUni < promExpo)
-            {
-                tbx_Conclusion.Text = "El promedio de estadia de camiones dentro del proceso, desde que es atendido po el recepcionista hasta uqe termina la descarga del combustible, es menor cuando la llegada de camiones se produce apartir de las 5:00 hs. (Apertura de Planta) en Distribución Uniforme entre 7 y 8 minutos.";
-            }
-            else
-            {
-                tbx_Conclusion.Text = "El promedio de estadia de camiones dentro del proceso, desde que es atendido po el recepcionista hasta que termina la descarga del combustible, es menor cuando la llegada de camiones se produce apartir de las 12:00 hs. en Distribución Exponencial Negativa de 7,5 minutos. Con Distribución Uniforme la llegada de camiones a partir de las 05:00hs. se llegarían a atender el Doble de camiones por día, quedando pocos camiones durmiento en la entrada de la planta.";
-            }
-
-        }
+        //private void btn_simular_Click(object sender, EventArgs e)
+        //{
+           
+        //}
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        private void Btn_simular_Click_1(object sender, EventArgs e)
+        {
+            //Validacion de texboxs
+            int dias = Convert.ToInt32(diasASimular.Text);
+            int hora2 = Int32.Parse(hor2.Text);
+            int minu2 = Int32.Parse(min2.Text);
+            int segu2 = Int32.Parse(seg2.Text);
+            long iter = long.Parse(iteraciones.Text);
+
+
+
+            if (dias > 0 && (hora2 >= 0 && hora2 <= 24) && (minu2 >= 0 && minu2 <= 60) && (segu2 >= 0 && segu2 <= 60))
+            {
+                if (iter >= 5 && iter <= 500000)
+                {
+                    TimeSpan TiempoASimular = TimeSpan.Parse(dias * 24 + ":" + "0" + ":" + "0");
+                    TimeSpan TiempoIniciociclos = TimeSpan.Parse(hor2.Text + ":" + min2.Text + ":" + seg2.Text);
+
+                    if (TiempoASimular <= TiempoIniciociclos)
+                    {
+                        MessageBox.Show(" La hora ingresada que indicara la cantidad de iteraciones a mostrar debe estar dentro del rango del tiempo a simular ingresado.");
+
+                    }
+                    else
+                    {
+                        GestorSimulacionUni gestor = new GestorSimulacionUni(Convert.ToInt32(iteraciones.Text), dias, TiempoIniciociclos);
+                        grillaEstadisticas.DataSource = gestor.SimularVectorEstado();
+                        ListaCamionesGrilla grillaCamiones = new ListaCamionesGrilla();
+                        grillaCamiones.cargarGrilla(gestor.cargarTablaCamiones(gestor.listaCamionesAtendidos));
+                        grillaCamiones.Show();
+                        txtPromedio.Text = Convert.ToString(gestor.sumTiempoPredioCamion);
+                        //ListaCamionesGrilla grillaCamiones2 = new ListaCamionesGrilla();
+                        //grillaCamiones2.cargarGrilla(gestor.tablaProximosCamiones);
+                        //grillaCamiones2.Show();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La cantidad ingresada de iteraciones no es correcta. Ingrese un valor entre 5 y 500000.");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Ingrese parametros de horas, minutos y segundos válidos. Para hora entre 0 y 24, para minutos y segundos entre 0 y 60.");
+            }
+
+        }
     }
 }

@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Windows.Forms;
 
 namespace TP5_Colas
 {
     class GestorSimulacionUni
     {
+        DataTable tablaCamiones = new DataTable();
+        public DataTable tablaProximosCamiones = new DataTable();
         GeneradorNumerosAleatoreos GeneradorUnico = new GeneradorNumerosAleatoreos();
         //Camion camion = new Camion();
         BalanzaSvr balanza = new BalanzaSvr();
@@ -22,7 +26,7 @@ namespace TP5_Colas
 
         public int cantCamionesAtendidosUni = 0;
         public int cantCamionesNOAtendidosUni = 0;
-        public TimeSpan sumTiempoPredioCamionUni;
+        public TimeSpan sumTiempoPredioCamionUni = new TimeSpan(0, 0, 0);
 
         TimeSpan reloj = new TimeSpan();
         TimeSpan relojInicio = new TimeSpan(5, 0, 0);
@@ -37,12 +41,36 @@ namespace TP5_Colas
         TimeSpan tiempoMinimo = new TimeSpan();
         TimeSpan seteoDeProximos = new TimeSpan(0, 0, 0);
         TimeSpan medioDia = new TimeSpan(12, 0, 0);
+        int tiempoASimular;
+        TimeSpan tiempoDeComienzoDeIteraciones;
+        int iteraciones;
+        Boolean IteracionesCompletadas = false;
+        int dia = 1;
+        DataTable vectorEstado = new DataTable();
+        int contadorDeIteraciones;
+        TimeSpan tiempoSimulado;
+        TimeSpan relojAnterior;
+        Camion ultimoCamion;
+        Camion ningunCamion = new Camion();
+        int contadorDeIteracionesRealizadas = 0;
+        int contadorDeCamiones = 1;
+        string tipoDeCamionUltimo;
+        string camionSiendoAtendidoEnRecepcion = "";
+        string camionSiendoAtendidoEnBalanza = "";
+        string camionSiendoAtendidoEnDarcena1 = "";
+        string camionSiendoAtendidoEnDarcena2 = "";
 
         int contadorDescargasDarcena1 = 0;
         int contadorDescargasDarcena2 = 0;
 
         //List<Camion> listaCamiones = new List<Camion>();
         Boolean servicioRealizado = false;
+        Boolean banderaCierreDePuertas = false;
+        Boolean banderaAperturaDePuertas = false;
+
+
+        TimeSpan ultimoValorLLegadaCamion = new TimeSpan(5, 0, 0);
+        TimeSpan valorValorLLegadaCamion = new TimeSpan(5, 0, 0);
 
         // colas
 
@@ -54,31 +82,90 @@ namespace TP5_Colas
         string estadoSimulacion = "llegada camion";
 
         //lista camiones atendidos
-        List<Camion> listaCamionesAtendidos = new List<Camion>();
+        public List<Camion> listaCamionesAtendidos = new List<Camion>();
         public List<Tuple<int, int>> resultados = new List<Tuple<int, int>>();
 
         // inicializar servidores
-        public GestorSimulacionUni()
+        public GestorSimulacionUni(int iteraciones, int tiempoASimular, TimeSpan tiempoInicioSimulacion)
         {
             recepcion.setGenerador(ref GeneradorUnico);
             balanza.setGenerador(ref GeneradorUnico);
             darsena1.setGenerador(ref GeneradorUnico);
             darsena2.setGenerador(ref GeneradorUnico);
+
+            recepcion.setCamionSiendoAtendido(ningunCamion);
+            balanza.setCamionSiendoAtendido(ningunCamion);
+            darsena1.setCamionSiendoAtendido(ningunCamion);
+            darsena2.setCamionSiendoAtendido(ningunCamion);
+
+
+
+            this.iteraciones = iteraciones;
+            this.tiempoASimular = tiempoASimular;
+            this.tiempoDeComienzoDeIteraciones = tiempoInicioSimulacion;
+
+            tablaProximosCamiones.Columns.Add("proximo camion");
+
+            vectorEstado.Columns.Add("Dia");
+            vectorEstado.Columns.Add("Reloj");
+            vectorEstado.Columns.Add("Evento");
+            vectorEstado.Columns.Add("Camion");
+            vectorEstado.Columns.Add("Tipo Camion");
+            vectorEstado.Columns.Add("Proxima llegada camion");
+            vectorEstado.Columns.Add("Recepcion");
+            vectorEstado.Columns.Add("Cola Recepcion");
+            vectorEstado.Columns.Add("Camion Siendo Atendido Recepcion");
+            vectorEstado.Columns.Add("Estado Recepcion");
+            vectorEstado.Columns.Add("Proxima Recepcion");
+            vectorEstado.Columns.Add("Balanza");
+            vectorEstado.Columns.Add("Cola Balanza");
+            vectorEstado.Columns.Add("Camion Siendo Atendido Balanza");
+            vectorEstado.Columns.Add("Estado Balanza");
+            vectorEstado.Columns.Add("Proxima Balanza");
+            vectorEstado.Columns.Add("Cola Darcena");
+            vectorEstado.Columns.Add("Darcena1");
+            vectorEstado.Columns.Add("Camion Siendo Atendido Darcena1");
+            vectorEstado.Columns.Add("Estado Darcena1");
+            vectorEstado.Columns.Add("Proxima Darcena1");
+            vectorEstado.Columns.Add("Darcena2");
+            vectorEstado.Columns.Add("Camion Siendo Atendido Darcena2");
+            vectorEstado.Columns.Add("Estado Darcena2");
+            vectorEstado.Columns.Add("Proxima Darcena2");
+            vectorEstado.Columns.Add("contadores");
+            vectorEstado.Columns.Add("cantidad camiones atendidos");
+            vectorEstado.Columns.Add("cantidad camiones no atendidos");
+            vectorEstado.Columns.Add("promedio de estancia de camion");
+
         }
 
-        public void Simulacion30diasUni()
+        public DataTable SimularVectorEstado()
         {
-            int cantDias = 30;
-            for (int i = 0; i < cantDias; i++)
+            while (IteracionesCompletadas == false && tiempoASimular >= dia)
             {
-                resultados.Add(SimulacionDiaUni(i + 1));
-                estadoSimulacion = "llegada camion";
-                //Mostrar cantidad de camiones atendidos y no atendidos de los 30 dias 
-
+                resultados.Add(SimulacionDiaUni(dia));
+                dia++;
             }
-            // Calcular PROMEDIO DE PERMANECIA de los camiones (en 30 dias)
-            sumTiempoPredioCamionUni = calcularPromedio(listaCamionesAtendidos);
+            if (contadorDeIteracionesRealizadas < iteraciones)
+            {
+                MessageBox.Show("no se completaron las iteraciones deseadas en los dias sumulados. Cantidad de iteraciones: " + contadorDeIteracionesRealizadas);
+            }
+            sumTiempoPredioCamion = calcularPromedio(listaCamionesAtendidos);
+            return vectorEstado;
         }
+
+        //public void Simulacion30diasUni()
+        //{
+        //    int cantDias = 30;
+        //    for (int i = 0; i < cantDias; i++)
+        //    {
+        //        resultados.Add(SimulacionDiaUni(i + 1));
+        //        estadoSimulacion = "llegada camion";
+        //        //Mostrar cantidad de camiones atendidos y no atendidos de los 30 dias 
+
+        //    }
+        //    // Calcular PROMEDIO DE PERMANECIA de los camiones (en 30 dias)
+        //    sumTiempoPredioCamionUni = calcularPromedio(listaCamionesAtendidos);
+        //}
 
 
 
@@ -88,11 +175,18 @@ namespace TP5_Colas
             cantCamionesNOAtendidos = 0;
             proximaLlegadaCamion = seteoDeProximos;
             reloj = new TimeSpan(5, 0, 0);
-            Boolean bandera = true;
+           // Boolean bandera = true;
+            banderaAperturaDePuertas = false;
+            banderaCierreDePuertas = false;
+            estadoSimulacion = "apertura de puertas";
+            proximaLlegadaCamion = reloj + llegadaCamionUni(7, 8);
 
 
             while (reloj < relojFinDia || recepcion.estado == "ocupado" || colaBalanza.Count != 0 || balanza.estado == "ocupado" || colaDarcena.Count != 0 || darsena1.estado == "ocupado" || darsena2.estado == "ocupado")
             {
+
+                servicioRealizado = false;
+                relojAnterior = reloj;
 
                 servicioRealizado = false;
                 if (contadorDescargasDarcena1 == 15)
@@ -114,6 +208,7 @@ namespace TP5_Colas
                     proximaRecepcion = reloj + recepcion.CalcularTiempoAtencion(3, 7);
                     recepcion.setCamionSiendoAtendido(colaRecepcion.Dequeue());
                     recepcion.getCamionSiendoAtendido().setHoraLlegada(reloj);
+                    recepcion.getCamionSiendoAtendido().agregarEstado("en recepcion", reloj);
                     recepcion.estado = "ocupado";
 
                 }
@@ -121,6 +216,7 @@ namespace TP5_Colas
                 {
                     proximaBalanza = reloj + balanza.CalcularTiempoPesaje(5, 7);
                     balanza.setCamionSiendoAtendido(colaBalanza.Dequeue());
+                    balanza.getCamionSiendoAtendido().agregarEstado("en balanza", reloj);
                     balanza.estado = "ocupado";
 
                 }
@@ -130,6 +226,7 @@ namespace TP5_Colas
                     darsena1.estado = "ocupado";
 
                     darsena1.setCamionSiendoAtendido(colaDarcena.Dequeue());
+                    darsena1.getCamionSiendoAtendido().agregarEstado("en darcena1", reloj);
                 }
                 if (colaDarcena.Count != 0 && darsena2.estado == "libre" && contadorDescargasDarcena2 < 15)
                 {
@@ -137,6 +234,7 @@ namespace TP5_Colas
                     darsena2.estado = "ocupado";
 
                     darsena2.setCamionSiendoAtendido(colaDarcena.Dequeue());
+                    darsena2.getCamionSiendoAtendido().agregarEstado("en darcena2", reloj);
                 }
                 if (estadoSimulacion == "llegada camion" && reloj >= relojInicio && reloj < relojFinDia)
                 {
@@ -144,106 +242,160 @@ namespace TP5_Colas
 
                 }
 
+                if (proximaLlegadaCamion > relojFinDia)
+                {
+                    proximaLlegadaCamion = seteoDeProximos;
+                }
+
+                generarVectorEstado(dia);
+
                 tiempoMinimo = minimo(proximaBalanza, proximaDarcena1, proximaDarcena2, proximaRecepcion, proximaLlegadaCamion, proximaCalibracionDarcena1, proximacalibracionDarcena2);
 
-                if (tiempoMinimo == seteoDeProximos)
+
+                if (tiempoMinimo >= relojFinDia && banderaCierreDePuertas == false)
                 {
-                    reloj = medioDia;
+                    estadoSimulacion = "cierre de las puertas";
+                    reloj = relojFinDia;
                     servicioRealizado = true;
-                    estadoSimulacion = "llegada camion";
+                    banderaCierreDePuertas = true;
                 }
 
+                //if (tiempoMinimo == seteoDeProximos)
+                //{
+                //    reloj = medioDia;
+                //    servicioRealizado = true;
+                //    estadoSimulacion = "llegada camion";
+                //}
+                
 
-                if (tiempoMinimo == proximaLlegadaCamion && servicioRealizado == false)
+                realizarAccion();
+
+                //if (tiempoMinimo == proximaLlegadaCamion && servicioRealizado == false)
+                //{
+                //    reloj = proximaLlegadaCamion;
+                //    estadoSimulacion = "llegada camion";
+                //    colaRecepcion.Enqueue(new Camion(contadorDeCamiones));
+                //    colaRecepcion.Peek().setGenerador(ref GeneradorUnico);
+                //    contadorDeCamiones++;
+                //    ultimoCamion = colaRecepcion.Peek();
+                //    proximaLlegadaCamion = seteoDeProximos;
+                //    servicioRealizado = true;
+                //    colaRecepcion.Peek().agregarEstado("en cola recepcion", reloj);
+                //}
+                //if (tiempoMinimo == proximaRecepcion && servicioRealizado == false)
+                //{
+
+                //    reloj = proximaRecepcion;
+                //    estadoSimulacion = "fin atencion recepcion";
+                //    recepcion.estado = "libre";
+                //    proximaRecepcion = seteoDeProximos;
+                //    recepcion.getCamionSiendoAtendido().setGenerador(ref GeneradorUnico);
+                //    recepcion.getCamionSiendoAtendido().agregarEstado("fin atencion recepcion", reloj);
+                //    servicioRealizado = true;
+                //    if (recepcion.getCamionSiendoAtendido().getTipoCamion() == 1)
+                //    {
+                //        colaDarcena.Enqueue(recepcion.getCamionSiendoAtendido());
+                //        ultimoCamion = colaDarcena.Peek();
+                //        colaDarcena.Peek().agregarEstado("en cola darcena", reloj);
+                //    }
+                //    else
+                //    {
+                //        colaBalanza.Enqueue(recepcion.getCamionSiendoAtendido());
+                //        ultimoCamion = colaBalanza.Peek();
+                //        colaBalanza.Peek().agregarEstado("en cola balanza", reloj);
+                //    }
+                //    recepcion.setCamionSiendoAtendido(ningunCamion);
+                //}
+
+                //if (tiempoMinimo == proximaBalanza && servicioRealizado == false)
+                //{
+
+                //    reloj = proximaBalanza;
+
+                //    estadoSimulacion = "fin atencion balanza";
+                //    balanza.estado = "libre";
+                //    balanza.getCamionSiendoAtendido().agregarEstado("fin atencion balanza", reloj);
+                //    colaDarcena.Enqueue(balanza.getCamionSiendoAtendido());
+                //    ultimoCamion = colaDarcena.Peek();
+                //    proximaBalanza = seteoDeProximos;
+                //    servicioRealizado = true;
+                //    balanza.setCamionSiendoAtendido(ningunCamion);
+                //    colaDarcena.Peek().agregarEstado("en cola darcena", reloj);
+
+                //}
+
+                //if (tiempoMinimo == proximaDarcena1 && servicioRealizado == false)
+                //{
+
+                //    reloj = proximaDarcena1;
+                //    estadoSimulacion = "fin atencion darcena1";
+                //    cantCamionesAtendidos++;
+                //    darsena1.estado = "libre";
+                //    listaCamionesAtendidos.Add(darsena1.getCamionSiendoAtendido());
+                //    listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
+
+                //    listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].agregarEstado("fin atencion darcena 1", reloj);
+
+                //    proximaDarcena1 = seteoDeProximos;
+                //    servicioRealizado = true;
+                //    contadorDescargasDarcena1++;
+                //    ultimoCamion = darsena1.getCamionSiendoAtendido();
+                //    darsena1.setCamionSiendoAtendido(ningunCamion);
+
+                //}
+                //if (tiempoMinimo == proximaDarcena2 && servicioRealizado == false)
+                //{
+
+                //    reloj = proximaDarcena2;
+                //    estadoSimulacion = "fin atencion darcena2";
+                //    cantCamionesAtendidos++;
+                //    darsena2.estado = "libre";
+                //    listaCamionesAtendidos.Add(darsena2.getCamionSiendoAtendido());
+                //    listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
+                //    listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].agregarEstado("fin atencion darcena 2", reloj);
+                //    proximaDarcena2 = seteoDeProximos;
+                //    servicioRealizado = true;
+                //    contadorDescargasDarcena2++;
+                //    ultimoCamion = darsena2.getCamionSiendoAtendido();
+                //    darsena2.setCamionSiendoAtendido(ningunCamion);
+
+                //}
+                //if (tiempoMinimo == proximaCalibracionDarcena1 && servicioRealizado == false)
+                //{
+                //    reloj = proximaCalibracionDarcena1;
+                //    estadoSimulacion = "fin calibracion darcena1";
+                //    proximaCalibracionDarcena1 = seteoDeProximos;
+                //    darsena1.estado = "libre";
+                //    servicioRealizado = true;
+                //}
+                //if (tiempoMinimo == proximacalibracionDarcena2 && servicioRealizado == false)
+                //{
+                //    reloj = proximacalibracionDarcena2;
+                //    estadoSimulacion = "fin calibracion darcena2";
+                //    proximacalibracionDarcena2 = seteoDeProximos;
+                //    darsena2.estado = "libre";
+                //    servicioRealizado = true;
+                //}
+
+                tiempoSimulado = tiempoSimulado + reloj - relojAnterior;
+
+                if (contadorDeIteracionesRealizadas == iteraciones)
                 {
-                    reloj = proximaLlegadaCamion;
-                    estadoSimulacion = "llegada camion";
-                    colaRecepcion.Enqueue(new Camion());
-                    proximaLlegadaCamion = seteoDeProximos;
-                    servicioRealizado = true;
+                    cantCamionesNOAtendidos = colaRecepcion.Count;
+                    IteracionesCompletadas = true;
+                    return Tuple.Create(cantCamionesAtendidos, cantCamionesNOAtendidos);
                 }
-                if (tiempoMinimo == proximaRecepcion && servicioRealizado == false)
-                {
-
-                    reloj = proximaRecepcion;
-                    estadoSimulacion = "fin atencion recepcion";
-                    recepcion.estado = "libre";
-                    proximaRecepcion = seteoDeProximos;
-                    recepcion.getCamionSiendoAtendido().setGenerador(ref GeneradorUnico);
-                    servicioRealizado = true;
-                    if (recepcion.getCamionSiendoAtendido().getTipoCamion() == 1)
-                    {
-                        colaDarcena.Enqueue(recepcion.getCamionSiendoAtendido());
-                    }
-                    else
-                    {
-                        colaBalanza.Enqueue(recepcion.getCamionSiendoAtendido());
-                    }
-                }
-
-                if (tiempoMinimo == proximaBalanza && servicioRealizado == false)
-                {
-
-                    reloj = proximaBalanza;
-
-                    estadoSimulacion = "fin atencion balanza";
-                    balanza.estado = "libre";
-                    colaDarcena.Enqueue(balanza.getCamionSiendoAtendido());
-                    proximaBalanza = seteoDeProximos;
-                    servicioRealizado = true;
-
-                }
-
-                if (tiempoMinimo == proximaDarcena1 && servicioRealizado == false)
-                {
-
-                    reloj = proximaDarcena1;
-                    estadoSimulacion = "fin atencion darcena1";
-                    cantCamionesAtendidos++;
-                    darsena1.estado = "libre";
-                    listaCamionesAtendidos.Add(darsena1.getCamionSiendoAtendido());
-                    listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
-                    proximaDarcena1 = seteoDeProximos;
-                    servicioRealizado = true;
-                    contadorDescargasDarcena1++;
-
-                }
-                if (tiempoMinimo == proximaDarcena2 && servicioRealizado == false)
-                {
-
-                    reloj = proximaDarcena2;
-                    estadoSimulacion = "fin atencion darcena2";
-                    cantCamionesAtendidos++;
-                    darsena2.estado = "libre";
-                    listaCamionesAtendidos.Add(darsena2.getCamionSiendoAtendido());
-                    listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
-                    proximaDarcena2 = seteoDeProximos;
-                    servicioRealizado = true;
-                    contadorDescargasDarcena2++;
-
-                }
-                if (tiempoMinimo == proximaCalibracionDarcena1 && servicioRealizado == false)
-                {
-                    reloj = proximaCalibracionDarcena1;
-                    estadoSimulacion = "fin calibracion darcena1";
-                    proximaCalibracionDarcena1 = seteoDeProximos;
-                    darsena1.estado = "libre";
-                    servicioRealizado = true;
-                }
-                if (tiempoMinimo == proximacalibracionDarcena2 && servicioRealizado == false)
-                {
-                    reloj = proximacalibracionDarcena2;
-                    estadoSimulacion = "fin calibracion darcena2";
-                    proximacalibracionDarcena2 = seteoDeProximos;
-                    darsena2.estado = "libre";
-                    servicioRealizado = true;
-                }
-
-
 
             }
 
+            generarVectorEstado(dia);
+
+            estadoSimulacion = "fin del dia";
+
             cantCamionesNOAtendidos = colaRecepcion.Count;
+
+            generarVectorEstado(dia);
+
             return Tuple.Create(cantCamionesAtendidos, cantCamionesNOAtendidos);
             //sumTiempoPredioCamion = calcularPromedio(listaCamionesAtendidos);
 
@@ -276,6 +428,24 @@ namespace TP5_Colas
 
         //    return GeneradorUnico.convertirSegundosHorasMinutos(tiempoLlegada);
         //}
+
+        public DataTable cargarTablaCamiones(List<Camion> listaCamionesFinalizados)
+        {
+            tablaCamiones.Columns.Add("estado camion");
+            tablaCamiones.Columns.Add("reloj");
+            foreach (Camion i in listaCamionesFinalizados)
+            {
+                tablaCamiones.Rows.Add("estado camion " + i.numeroCamion, "reloj");
+                for (int j = 0; j < i.conocerEstados().Item1.Count; j++)
+                {
+                    tablaCamiones.Rows.Add(i.conocerEstados().Item1[j], i.conocerEstados().Item2[j]);
+
+
+                }
+                tablaCamiones.Rows.Add("", "");
+            }
+            return tablaCamiones;
+        }
 
         private TimeSpan llegadaCamionUni(double valorA, double valorB)
         {
@@ -338,6 +508,217 @@ namespace TP5_Colas
             }
 
             return min;
+        }
+
+        private void generarVectorEstado(int dia)
+        {
+            if (tiempoDeComienzoDeIteraciones < tiempoSimulado)
+            {
+                estadoSimulacion = estadoSimulacion;
+                if (ultimoCamion.getTipoCamion() == 1)
+                {
+                    tipoDeCamionUltimo = "propio";
+                }
+                else
+                {
+                    tipoDeCamionUltimo = "externo";
+                }
+                if (recepcion.getCamionSiendoAtendido().numeroCamion != 0)
+                {
+                    camionSiendoAtendidoEnRecepcion = Convert.ToString(recepcion.getCamionSiendoAtendido().numeroCamion);
+                }
+                else
+                {
+                    camionSiendoAtendidoEnRecepcion = "";
+                }
+                if (balanza.getCamionSiendoAtendido().numeroCamion != 0)
+                {
+                    camionSiendoAtendidoEnBalanza = Convert.ToString(balanza.getCamionSiendoAtendido().numeroCamion);
+                }
+                else
+                {
+                    camionSiendoAtendidoEnBalanza = "";
+                }
+                if (darsena1.getCamionSiendoAtendido().numeroCamion != 0)
+                {
+                    camionSiendoAtendidoEnDarcena1 = Convert.ToString(darsena1.getCamionSiendoAtendido().numeroCamion);
+                }
+                else
+                {
+                    camionSiendoAtendidoEnDarcena1 = "";
+                }
+                if (darsena2.getCamionSiendoAtendido().numeroCamion != 0)
+                {
+                    camionSiendoAtendidoEnDarcena2 = Convert.ToString(darsena2.getCamionSiendoAtendido().numeroCamion);
+                }
+                else
+                {
+                    camionSiendoAtendidoEnDarcena2 = "";
+                }
+                if (estadoSimulacion == "cierre de las puertas" || estadoSimulacion == "apertura de puertas" || estadoSimulacion == "fin del dia")
+                {
+                    vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, "", "", proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
+                }
+                else
+                {
+                    vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, ultimoCamion.numeroCamion, tipoDeCamionUltimo, proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
+                }
+                contadorDeIteracionesRealizadas++;
+                if (tablaProximosCamiones.Rows.Count != 0)
+                {
+                    if (proximaLlegadaCamion != ultimoValorLLegadaCamion)
+                    {
+                        tablaProximosCamiones.Rows.Add(valorValorLLegadaCamion);
+                        ultimoValorLLegadaCamion = proximaLlegadaCamion;
+                    }
+                }
+                else
+                {
+                    tablaProximosCamiones.Rows.Add(valorValorLLegadaCamion);
+                    ultimoValorLLegadaCamion = proximaLlegadaCamion;
+                }
+
+            }
+            else
+            {
+                vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, "", "", proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
+            }
+        }
+
+        private string CamionesEnCola(Queue<Camion> colaCamiones)
+        {
+            string cadena = "";
+            if (colaCamiones.Count == 0)
+            {
+                return "-";
+            }
+            else
+            {
+                foreach (Camion i in colaCamiones)
+                {
+                    cadena = cadena + i.numeroCamion + "_";
+                }
+                return cadena;
+            }
+        }
+
+
+        private void realizarAccion()
+        {
+            if (tiempoMinimo == proximaLlegadaCamion && servicioRealizado == false)
+            {
+                reloj = proximaLlegadaCamion;
+                estadoSimulacion = "llegada camion";
+                colaRecepcion.Enqueue(new Camion(contadorDeCamiones));
+                colaRecepcion.Peek().setGenerador(ref GeneradorUnico);
+                contadorDeCamiones++;
+                ultimoCamion = colaRecepcion.Peek();
+                proximaLlegadaCamion = seteoDeProximos;
+                servicioRealizado = true;
+                colaRecepcion.Peek().agregarEstado("en cola recepcion", reloj);
+            }
+            if (tiempoMinimo == proximaRecepcion && servicioRealizado == false)
+            {
+
+                reloj = proximaRecepcion;
+                estadoSimulacion = "fin atencion recepcion";
+                recepcion.estado = "libre";
+                proximaRecepcion = seteoDeProximos;
+                recepcion.getCamionSiendoAtendido().agregarEstado("fin atencion recepcion", reloj);
+                //recepcion.getCamionSiendoAtendido().setGenerador(ref GeneradorUnico);
+
+                servicioRealizado = true;
+                if (recepcion.getCamionSiendoAtendido().getTipoCamion() == 1)
+                {
+                    colaDarcena.Enqueue(recepcion.getCamionSiendoAtendido());
+                    ultimoCamion = colaDarcena.Peek();
+                    colaDarcena.Peek().agregarEstado("en cola darcena", reloj);
+                }
+                else
+                {
+                    colaBalanza.Enqueue(recepcion.getCamionSiendoAtendido());
+                    ultimoCamion = colaBalanza.Peek();
+                    colaBalanza.Peek().agregarEstado("en cola balanza", reloj);
+                }
+                recepcion.setCamionSiendoAtendido(ningunCamion);
+            }
+
+            if (tiempoMinimo == proximaBalanza && servicioRealizado == false)
+            {
+
+                reloj = proximaBalanza;
+
+                estadoSimulacion = "fin atencion balanza";
+                balanza.estado = "libre";
+
+                balanza.getCamionSiendoAtendido().agregarEstado("fin atencion balanza", reloj);
+
+                colaDarcena.Enqueue(balanza.getCamionSiendoAtendido());
+                ultimoCamion = colaDarcena.Peek();
+                proximaBalanza = seteoDeProximos;
+                servicioRealizado = true;
+                balanza.setCamionSiendoAtendido(ningunCamion);
+                colaDarcena.Peek().agregarEstado("en cola darcena", reloj);
+
+            }
+
+            if (tiempoMinimo == proximaDarcena1 && servicioRealizado == false)
+            {
+
+                reloj = proximaDarcena1;
+                estadoSimulacion = "fin atencion darcena1";
+                cantCamionesAtendidos++;
+                darsena1.estado = "libre";
+
+                // darsena1.getCamionSiendoAtendido().agregarEstado("fin atencion darcena 1", reloj);
+
+                listaCamionesAtendidos.Add(darsena1.getCamionSiendoAtendido());
+                listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
+                listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].agregarEstado("fin atencion darcena 1", reloj);
+                ultimoCamion = darsena1.getCamionSiendoAtendido();
+                proximaDarcena1 = seteoDeProximos;
+                servicioRealizado = true;
+                contadorDescargasDarcena1++;
+                darsena1.setCamionSiendoAtendido(ningunCamion);
+
+
+            }
+            if (tiempoMinimo == proximaDarcena2 && servicioRealizado == false)
+            {
+
+                reloj = proximaDarcena2;
+                estadoSimulacion = "fin atencion darcena2";
+                cantCamionesAtendidos++;
+                darsena2.estado = "libre";
+
+                //darsena2.getCamionSiendoAtendido().agregarEstado("fin atencion darcena 2", reloj);
+
+                listaCamionesAtendidos.Add(darsena2.getCamionSiendoAtendido());
+                listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].setHoraSalida(reloj);
+                listaCamionesAtendidos[listaCamionesAtendidos.Count - 1].agregarEstado("fin atencion darcena 2", reloj);
+                ultimoCamion = darsena2.getCamionSiendoAtendido();
+                proximaDarcena2 = seteoDeProximos;
+                servicioRealizado = true;
+                contadorDescargasDarcena2++;
+                darsena2.setCamionSiendoAtendido(ningunCamion);
+
+            }
+            if (tiempoMinimo == proximaCalibracionDarcena1 && servicioRealizado == false)
+            {
+                reloj = proximaCalibracionDarcena1;
+                estadoSimulacion = "fin calibracion darcena1";
+                proximaCalibracionDarcena1 = seteoDeProximos;
+                darsena1.estado = "libre";
+                servicioRealizado = true;
+            }
+            if (tiempoMinimo == proximacalibracionDarcena2 && servicioRealizado == false)
+            {
+                reloj = proximacalibracionDarcena2;
+                estadoSimulacion = "fin calibracion darcena2";
+                proximacalibracionDarcena2 = seteoDeProximos;
+                darsena2.estado = "libre";
+                servicioRealizado = true;
+            }
         }
     }
 }
