@@ -68,6 +68,8 @@ namespace TP5_Colas
         Boolean banderaCierreDePuertas = false;
         Boolean banderaAperturaDePuertas = false;
 
+        int ultimoNumeroCamion;
+
 
         TimeSpan ultimoValorLLegadaCamion = new TimeSpan(5, 0, 0);
         TimeSpan valorValorLLegadaCamion = new TimeSpan(5, 0, 0);
@@ -77,6 +79,10 @@ namespace TP5_Colas
         Queue<Camion> colaRecepcion = new Queue<Camion>();
         Queue<Camion> colaBalanza = new Queue<Camion>();
         Queue<Camion> colaDarcena = new Queue<Camion>();
+
+
+
+
 
         // bandera de simulacion de un dia
         string estadoSimulacion = "llegada camion";
@@ -283,12 +289,12 @@ namespace TP5_Colas
                     reloj = proximaLlegadaCamion;
                     estadoSimulacion = "llegada camion";
                     colaRecepcion.Enqueue(new Camion(contadorDeCamiones));
-                    colaRecepcion.Peek().setGenerador(ref GeneradorUnico);
+                    colaRecepcion.Last().setGenerador(ref GeneradorUnico);
                     contadorDeCamiones++;
-                    ultimoCamion = colaRecepcion.Peek();
+                    ultimoCamion = colaRecepcion.Last();
                     proximaLlegadaCamion = seteoDeProximos;
                     servicioRealizado = true;
-                    colaRecepcion.Peek().agregarEstado("en cola recepcion", reloj);
+                    colaRecepcion.Last().agregarEstado("en cola recepcion", reloj);
                 }
                 if (tiempoMinimo == proximaRecepcion && servicioRealizado == false)
                 {
@@ -304,14 +310,14 @@ namespace TP5_Colas
                     if (recepcion.getCamionSiendoAtendido().getTipoCamion() == 1)
                     {
                         colaDarcena.Enqueue(recepcion.getCamionSiendoAtendido());
-                        ultimoCamion = colaDarcena.Peek();
-                        colaDarcena.Peek().agregarEstado("en cola darcena", reloj);
+                        ultimoCamion = colaDarcena.Last();
+                        colaDarcena.Last().agregarEstado("en cola darcena", reloj);
                     }
                     else
                     {
                         colaBalanza.Enqueue(recepcion.getCamionSiendoAtendido());
-                        ultimoCamion = colaBalanza.Peek();
-                        colaBalanza.Peek().agregarEstado("en cola balanza", reloj);
+                        ultimoCamion = colaBalanza.Last();
+                        colaBalanza.Last().agregarEstado("en cola balanza", reloj);
                     }
                     recepcion.setCamionSiendoAtendido(ningunCamion);
                 }
@@ -327,11 +333,11 @@ namespace TP5_Colas
                     balanza.getCamionSiendoAtendido().agregarEstado("fin atencion balanza", reloj);
                    
                     colaDarcena.Enqueue(balanza.getCamionSiendoAtendido());
-                    ultimoCamion = colaDarcena.Peek();
+                    ultimoCamion = colaDarcena.Last();
                     proximaBalanza = seteoDeProximos;
                     servicioRealizado = true;
                     balanza.setCamionSiendoAtendido(ningunCamion);
-                    colaDarcena.Peek().agregarEstado("en cola darcena", reloj);
+                    colaDarcena.Last().agregarEstado("en cola darcena", reloj);
 
                 }
 
@@ -588,7 +594,7 @@ namespace TP5_Colas
                 {
                     camionSiendoAtendidoEnDarcena2 = "";
                 }
-                if (estadoSimulacion == "cierre de las puertas" || estadoSimulacion == "apertura de puertas" || estadoSimulacion == "fin del dia")
+                if (estadoSimulacion == "cierre de las puertas" || estadoSimulacion == "apertura de puertas" || estadoSimulacion == "fin del dia" || estadoSimulacion == "fin calibracion darcena1" || estadoSimulacion == "fin calibracion darcena2")
                 {
                     vectorEstado.Rows.Add(dia,reloj, estadoSimulacion, "", "",proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2,null,cantCamionesAtendidos,cantCamionesNOAtendidos,calcularPromedio(listaCamionesAtendidos));
                 }
@@ -613,5 +619,7 @@ namespace TP5_Colas
                 
             }
         }
+
+
     }
 }
