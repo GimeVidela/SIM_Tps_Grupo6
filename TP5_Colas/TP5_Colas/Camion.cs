@@ -9,6 +9,7 @@ namespace TP5_Colas
     class Camion
     {
         int tipoCamnion;
+        double aleatorio;
         TimeSpan horaLlegada;
         TimeSpan horaSalida = new TimeSpan();
         private GeneradorNumerosAleatoreos generador;
@@ -41,7 +42,7 @@ namespace TP5_Colas
         public void setGenerador(ref GeneradorNumerosAleatoreos generador)
         {
             this.generador = generador;
-            calcularTipoCamion();
+            this.aleatorio = calcularTipoCamion();
         }
         public void setHoraLlegada (TimeSpan horaLlegadaCamion)
         {
@@ -72,10 +73,15 @@ namespace TP5_Colas
            return tipoCamnion;
         }
 
-        private void calcularTipoCamion()
+        public double getTipoAleatorio()
         {
-            
-            Double aleatorio = generador.GenerarAleatorio();
+            return aleatorio;
+        }
+
+        private double calcularTipoCamion()
+        {
+
+            Double aleatorio = Math.Round(generador.GenerarAleatorio(), 3);
             if (aleatorio < 0.35)
             {
                 tipoCamnion = 1; // CAMION PROPIO
@@ -84,34 +90,34 @@ namespace TP5_Colas
             {
                 tipoCamnion = 2; // CAMION EXTERNO
             }
-          
+            return aleatorio;
         }
 
-    //    private TimeSpan llegadaCamionExponencial(double lambda)
-    //    {
-    //        //Distribucion Exponencial Negativa
-    //        TimeSpan llegada = new TimeSpan();
-    //        Random rand = new Random();
-    //        double aleatorio = rand.Next(0, 1);
-    //        long tiempoLlegada = 0;
-    //        tiempoLlegada = (long)-lambda * (long)Math.Log(1 - aleatorio);
+        //    private TimeSpan llegadaCamionExponencial(double lambda)
+        //    {
+        //        //Distribucion Exponencial Negativa
+        //        TimeSpan llegada = new TimeSpan();
+        //        Random rand = new Random();
+        //        double aleatorio = rand.Next(0, 1);
+        //        long tiempoLlegada = 0;
+        //        tiempoLlegada = (long)-lambda * (long)Math.Log(1 - aleatorio);
 
-    //        llegada = new TimeSpan(tiempoLlegada);
-    //        return llegada;
-    //    }
+        //        llegada = new TimeSpan(tiempoLlegada);
+        //        return llegada;
+        //    }
 
 
-    //    private TimeSpan llegadaCamionUniforme(double valorA, double valorB)
-    //    {
-    //        //Distribucion Uniforme
-    //        TimeSpan llegada = new TimeSpan();
-    //        Random rand = new Random();
-    //        double aleatorio = rand.Next(0, 1);
-    //        long tiempoLlegada = 0;
-    //        tiempoLlegada = (long)valorA + (long)aleatorio * (long)(valorB - valorA);
+        //    private TimeSpan llegadaCamionUniforme(double valorA, double valorB)
+        //    {
+        //        //Distribucion Uniforme
+        //        TimeSpan llegada = new TimeSpan();
+        //        Random rand = new Random();
+        //        double aleatorio = rand.Next(0, 1);
+        //        long tiempoLlegada = 0;
+        //        tiempoLlegada = (long)valorA + (long)aleatorio * (long)(valorB - valorA);
 
-    //        llegada = new TimeSpan(tiempoLlegada);
-    //        return llegada;
-    //    }
+        //        llegada = new TimeSpan(tiempoLlegada);
+        //        return llegada;
+        //    }
     }
 }

@@ -35,18 +35,20 @@
             // GrillaListaCamiones
             // 
             this.GrillaListaCamiones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrillaListaCamiones.Location = new System.Drawing.Point(12, 12);
+            this.GrillaListaCamiones.Location = new System.Drawing.Point(11, 11);
+            this.GrillaListaCamiones.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.GrillaListaCamiones.Name = "GrillaListaCamiones";
             this.GrillaListaCamiones.RowTemplate.Height = 24;
-            this.GrillaListaCamiones.Size = new System.Drawing.Size(776, 426);
+            this.GrillaListaCamiones.Size = new System.Drawing.Size(262, 567);
             this.GrillaListaCamiones.TabIndex = 0;
             // 
             // ListaCamionesGrilla
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(284, 588);
             this.Controls.Add(this.GrillaListaCamiones);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ListaCamionesGrilla";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ListaCamionesGrilla";
