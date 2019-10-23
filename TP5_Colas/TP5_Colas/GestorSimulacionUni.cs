@@ -85,6 +85,9 @@ namespace TP5_Colas
         public List<Camion> listaCamionesAtendidos = new List<Camion>();
         public List<Tuple<int, int>> resultados = new List<Tuple<int, int>>();
 
+        int totalCamionesAtendidosGlobal;
+        int totalCamionesNoAtendidosGlobal;
+
         // inicializar servidores
         public GestorSimulacionUni(int iteraciones, int tiempoASimular, TimeSpan tiempoInicioSimulacion)
         {
@@ -129,11 +132,13 @@ namespace TP5_Colas
             vectorEstado.Columns.Add("Estado Dársena1");
             vectorEstado.Columns.Add("Próxima Dársena1");
             vectorEstado.Columns.Add("Contador Dársena1");
+            vectorEstado.Columns.Add("Tiempo Calibración Dársena1");
             vectorEstado.Columns.Add("Dársena2");
             vectorEstado.Columns.Add("Camión Siendo Atendido Dársena2");
             vectorEstado.Columns.Add("Estado Dársena2");
             vectorEstado.Columns.Add("Próxima Dársena2");
             vectorEstado.Columns.Add("Contador Dársena2");
+            vectorEstado.Columns.Add("Tiempo Calibración Dársena2");
             vectorEstado.Columns.Add("Contadores");
             vectorEstado.Columns.Add("Cantidad Camiones Atendidos");
             vectorEstado.Columns.Add("Cantidad Camiones NO Atendidos");
@@ -146,6 +151,11 @@ namespace TP5_Colas
             while (IteracionesCompletadas == false && tiempoASimular >= dia)
             {
                 resultados.Add(SimulacionDiaUni(dia));
+                int auxiliarContador = resultados.LastOrDefault().Item1;
+                totalCamionesAtendidosGlobal += auxiliarContador;
+
+                int auxiliarContadorNoAtendidos = resultados.LastOrDefault().Item2;
+                totalCamionesNoAtendidosGlobal += auxiliarContadorNoAtendidos;
                 dia++;
             }
             if (contadorDeIteracionesRealizadas < iteraciones)
@@ -404,6 +414,16 @@ namespace TP5_Colas
 
         }
 
+        public int totalCamionesGlobal()
+        {
+            return totalCamionesAtendidosGlobal;
+        }
+
+        public int totalNoCamionesGlobal()
+        {
+            return totalCamionesNoAtendidosGlobal;
+        }
+
         private TimeSpan calcularPromedio(List<Camion> listaCamiones)
         {
             Double promedio = 0;
@@ -560,11 +580,11 @@ namespace TP5_Colas
                 }
                 if (estadoSimulacion == "cierre de las puertas" || estadoSimulacion == "apertura de puertas" || estadoSimulacion == "fin del dia" || estadoSimulacion == "fin calibracion darcena1" || estadoSimulacion == "fin calibracion darcena2")
                 {
-                    vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, "", "", "", proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, contadorDescargasDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, contadorDescargasDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
-                }
+                    vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, "", "", "", proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, contadorDescargasDarcena1, proximaCalibracionDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, contadorDescargasDarcena2, proximacalibracionDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
+                   }
                 else
                 {
-                    vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, ultimoCamion.numeroCamion, ultimoCamion.getTipoAleatorio(), tipoDeCamionUltimo, proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, contadorDescargasDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, contadorDescargasDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
+                    vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, ultimoCamion.numeroCamion, ultimoCamion.getTipoAleatorio(), tipoDeCamionUltimo, proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, contadorDescargasDarcena1, proximaCalibracionDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, contadorDescargasDarcena2, proximacalibracionDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
                 }
                 contadorDeIteracionesRealizadas++;
                 if (tablaProximosCamiones.Rows.Count != 0)
@@ -584,7 +604,7 @@ namespace TP5_Colas
             }
             else
             {
-                vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, "", "","", proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, contadorDescargasDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, contadorDescargasDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
+                vectorEstado.Rows.Add(dia, reloj, estadoSimulacion, "", "","", proximaLlegadaCamion, null, CamionesEnCola(colaRecepcion), camionSiendoAtendidoEnRecepcion, recepcion.estado, proximaRecepcion, null, CamionesEnCola(colaBalanza), camionSiendoAtendidoEnBalanza, balanza.estado, proximaBalanza, CamionesEnCola(colaDarcena), null, camionSiendoAtendidoEnDarcena1, darsena1.estado, proximaDarcena1, contadorDescargasDarcena1,proximaCalibracionDarcena1, null, camionSiendoAtendidoEnDarcena2, darsena2.estado, proximaDarcena2, contadorDescargasDarcena2, proximacalibracionDarcena2, null, cantCamionesAtendidos, cantCamionesNOAtendidos, calcularPromedio(listaCamionesAtendidos));
             }
         }
 

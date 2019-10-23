@@ -60,6 +60,10 @@ namespace TP5_Colas
                                 grillaCamiones.cargarGrilla(gestor.cargarTablaCamiones(gestor.listaCamionesAtendidos));
                                 grillaCamiones.Show();
                                 txtPromedio.Text = Convert.ToString(gestor.sumTiempoPredioCamion);
+
+                                lblResultado.Text = "Cantidad de camiones atendidos: " + Convert.ToString(gestor.totalCamionesGlobal()) + ". Camiones NO atendidos: " + Convert.ToString(gestor.totalNoCamionesGlobal()) + ".-";
+                                lblResultado.Visible = true;
+
                                 //ListaCamionesGrilla grillaCamiones2 = new ListaCamionesGrilla();
                                 //grillaCamiones2.cargarGrilla(gestor.tablaProximosCamiones);
                                 //grillaCamiones2.Show();
@@ -81,6 +85,16 @@ namespace TP5_Colas
             {
                 MessageBox.Show("Ningún campo debe estar vacío");
             }
+        }
+
+        private void lblResultado_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSalir_Click_1(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
