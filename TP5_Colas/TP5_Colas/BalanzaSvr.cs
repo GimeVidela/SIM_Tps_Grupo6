@@ -9,7 +9,7 @@ namespace TP5_Colas
     class BalanzaSvr
     {
         private GeneradorNumerosAleatoreos generador;
-        public string estado = "libre";
+        public string estado = "Libre";
         private Camion camionSiendoAtendido;
 
         public void setCamionSiendoAtendido(Camion camionSiendoAtendido)
@@ -34,5 +34,7 @@ namespace TP5_Colas
 
             return generador.convertirSegundosHorasMinutos(tiempo);
         }
+
+    
     }
 }

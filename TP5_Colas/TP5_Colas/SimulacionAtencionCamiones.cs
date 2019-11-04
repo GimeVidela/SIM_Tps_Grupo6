@@ -59,8 +59,6 @@ namespace TP5_Colas
                                 grillaCamiones.cargarGrilla(gestor.cargarTablaCamiones(gestor.listaCamionesAtendidos));
                                 grillaCamiones.Show();
                                 txtPromedio.Text = Convert.ToString(gestor.sumTiempoPredioCamion);
-                                lblResultado.Text = "Cantidad de camiones atendidos: " + Convert.ToString(gestor.totalCamionesGlobal()) + ". Camiones NO atendidos: " + Convert.ToString(gestor.totalNoCamionesGlobal()) + ".-";
-                                lblResultado.Visible = true;
 
                                 //ListaCamionesGrilla grillaCamiones2 = new ListaCamionesGrilla();
                             }

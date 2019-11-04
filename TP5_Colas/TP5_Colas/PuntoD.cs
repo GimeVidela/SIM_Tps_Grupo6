@@ -49,7 +49,7 @@ namespace TP5_Colas
 
                             if (TiempoASimular <= TiempoIniciociclos)
                             {
-                                MessageBox.Show(" La hora ingresada que indicara la cantidad de iteraciones a mostrar debe estar dentro del rango del tiempo a simular ingresado.");
+                                MessageBox.Show("La hora ingresada que indicara la cantidad de iteraciones a mostrar debe estar dentro del rango del tiempo a simular ingresado.");
 
                             }
                             else
@@ -60,9 +60,6 @@ namespace TP5_Colas
                                 grillaCamiones.cargarGrilla(gestor.cargarTablaCamiones(gestor.listaCamionesAtendidos));
                                 grillaCamiones.Show();
                                 txtPromedio.Text = Convert.ToString(gestor.sumTiempoPredioCamion);
-
-                                lblResultado.Text = "Cantidad de camiones atendidos: " + Convert.ToString(gestor.totalCamionesGlobal()) + ". Camiones NO atendidos: " + Convert.ToString(gestor.totalNoCamionesGlobal()) + ".-";
-                                lblResultado.Visible = true;
 
                                 //ListaCamionesGrilla grillaCamiones2 = new ListaCamionesGrilla();
                                 //grillaCamiones2.cargarGrilla(gestor.tablaProximosCamiones);

@@ -10,6 +10,7 @@ namespace TP5_Colas
     {
         int tipoCamnion;
         double aleatorio;
+        double peso;
         TimeSpan horaLlegada;
         TimeSpan horaSalida = new TimeSpan();
         private GeneradorNumerosAleatoreos generador;
@@ -26,7 +27,7 @@ namespace TP5_Colas
 
         public void agregarEstado(string estado, TimeSpan reloj)
         {
-            if(estado == "cola darcena" && estados[estados.Count - 1] == "fin atencion recepcion")
+            if(estado == "Cola Dársena" && estados[estados.Count - 1] == "Fin Atención Recepción")
             {
                 this.estados.Add("");
                 this.tiempos.Add("");
@@ -43,6 +44,8 @@ namespace TP5_Colas
         {
             this.generador = generador;
             this.aleatorio = calcularTipoCamion();
+            if (this.tipoCamnion ==2)
+            { this.peso = CalcularPeso(15000, 20000); }
         }
         public void setHoraLlegada (TimeSpan horaLlegadaCamion)
         {
@@ -93,31 +96,20 @@ namespace TP5_Colas
             return aleatorio;
         }
 
-        //    private TimeSpan llegadaCamionExponencial(double lambda)
-        //    {
-        //        //Distribucion Exponencial Negativa
-        //        TimeSpan llegada = new TimeSpan();
-        //        Random rand = new Random();
-        //        double aleatorio = rand.Next(0, 1);
-        //        long tiempoLlegada = 0;
-        //        tiempoLlegada = (long)-lambda * (long)Math.Log(1 - aleatorio);
+        // TP6
+        public double CalcularPeso(double valorA, double valorB)
+        {
+            //Distribucion Uniforme Peso
+            double aleatorio = generador.GenerarAleatorio();
 
-        //        llegada = new TimeSpan(tiempoLlegada);
-        //        return llegada;
-        //    }
+            double peso = valorA + aleatorio * (valorB - valorA);
 
+            return peso;
+        }
+        public double getPeso()
+        {
+            return peso;
+        }
 
-        //    private TimeSpan llegadaCamionUniforme(double valorA, double valorB)
-        //    {
-        //        //Distribucion Uniforme
-        //        TimeSpan llegada = new TimeSpan();
-        //        Random rand = new Random();
-        //        double aleatorio = rand.Next(0, 1);
-        //        long tiempoLlegada = 0;
-        //        tiempoLlegada = (long)valorA + (long)aleatorio * (long)(valorB - valorA);
-
-        //        llegada = new TimeSpan(tiempoLlegada);
-        //        return llegada;
-        //    }
     }
 }

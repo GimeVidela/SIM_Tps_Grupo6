@@ -9,7 +9,7 @@ namespace TP5_Colas
     class RecepcionSvr
     {
         private GeneradorNumerosAleatoreos generador;
-        public string estado = "libre";
+        public string estado = "Libre";
         private Camion camionSiendoAtendido;
 
 
