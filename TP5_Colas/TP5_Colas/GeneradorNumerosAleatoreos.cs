@@ -47,6 +47,7 @@ namespace TP5_Colas
             hor = (segundos / 3600);
             min = ((segundos - hor * 3600) / 60);
             seg = segundos - (hor * 3600 + min * 60);
+
             return TimeSpan.Parse(hor + ":" + min + ":" + seg);
         }
 

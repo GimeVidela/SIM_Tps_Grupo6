@@ -93,5 +93,10 @@ namespace TP5_Colas
         {
             Close();
         }
+
+        private void PuntoD_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

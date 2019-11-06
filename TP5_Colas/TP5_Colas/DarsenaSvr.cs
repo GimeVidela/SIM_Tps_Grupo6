@@ -71,7 +71,7 @@ namespace TP5_Colas
         public TimeSpan CalcularDescargaEuler(double litros)
         {
             //Constantes
-            double lt = litros;
+            //double lt = litros;
             double k = CalcularK(0.25,0.707);
             double h = 0.01;
             //Variables auxiliares
@@ -84,11 +84,11 @@ namespace TP5_Colas
                 x2 = -k * x1 - 20 * x;
                 x = x + h * x1;
                 x1 = x1 + h * x2;
-                h = h++;
+                h = h + h;
 
             } while (x > 1);
 
-            return generador.convertirSegundosHorasMinutos(h);
+            return generador.convertirSegundosHorasMinutos(h*60);
         }
     }
 }

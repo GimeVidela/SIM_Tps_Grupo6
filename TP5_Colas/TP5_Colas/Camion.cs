@@ -10,7 +10,7 @@ namespace TP5_Colas
     {
         int tipoCamnion;
         double aleatorio;
-        double peso;
+        public double peso;
         TimeSpan horaLlegada;
         TimeSpan horaSalida = new TimeSpan();
         private GeneradorNumerosAleatoreos generador;
